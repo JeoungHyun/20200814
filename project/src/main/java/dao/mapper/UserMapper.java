@@ -30,4 +30,7 @@ public interface UserMapper {
 
 	@Select("select ifnull(max(uno),0) uno from user")
 	int getmaxuno();
+
+	@Select("select id from user where name=#{name} and email=#{email}")
+	String findId(Map<String, Object> param);
 }

@@ -44,4 +44,11 @@ public class UserDao {
 	public List<User> getUserList() {
 		return template.getMapper(UserMapper.class).select(null);
 	}
+	
+	public String findId(String name, String email) {
+		param.clear();
+		param.put("name", name);
+		param.put("email", email);
+		return template.getMapper(UserMapper.class).findId(param);
+	}
 }

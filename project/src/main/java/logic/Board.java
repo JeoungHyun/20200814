@@ -11,6 +11,7 @@ public class Board {
 	String content;
 	Date regdate;
 	boolean open;
+	int point;
 	
 	public int getNo() {
 		return no;
@@ -54,8 +55,20 @@ public class Board {
 	public void setOpen(boolean open) {
 		this.open = open;
 	}
+	public int getPoint() {
+		return point;
+	}
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	@Override
+	public String toString() {
+		return "Board [no=" + no + ", bno=" + bno + ", name=" + name + ", title=" + title + ", content=" + content
+				+ ", regdate=" + regdate + ", open=" + open + ", point=" + point + "]";
+	}
 	
 	
+
 	
 	
 }

@@ -1,6 +1,8 @@
 package logic;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,6 +22,14 @@ public class Coworking {
 	private String process;
 	private String grade;
 	private String loc;
+	private List<String> hashlist = new ArrayList<String>();
+	
+	public List<String> getHashlist() {
+		return hashlist;
+	}
+	public void addHashlist(String hashname) {
+		this.hashlist.add(hashname);
+	}
 	public int getGno() {
 		return gno;
 	}
@@ -96,8 +106,10 @@ public class Coworking {
 	public String toString() {
 		return "Coworking [gno=" + gno + ", name=" + name + ", title=" + title + ", category=" + category + ", content="
 				+ content + ", maxnum=" + maxnum + ", startdate=" + startdate + ", enddate=" + enddate + ", deadline="
-				+ deadline + ", process=" + process + ", grade=" + grade + ", loc=" + loc + "]";
+				+ deadline + ", process=" + process + ", grade=" + grade + ", loc=" + loc + ", hashlist=" + hashlist
+				+ "]";
 	}
+	
 	
 	
 }

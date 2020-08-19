@@ -64,8 +64,13 @@
 		<c:if test ="${board.name == loginUser.name }">
 		<a href="update.dev?no=${board.no}&&bno=${board.bno}">[수정]</a>
 		<a href="delete.dev?no=${board.no}&&bno=${board.bno}">[삭제]</a>
+		
 		</c:if>
 		<a href="list.dev?no=${no }">[게시물목록]</a>
+		<c:if test="${!empty loginUser.name  }">
+		<a href="likeit.dev?no=${board.no}&&bno=${board.bno}">[추천하기]</a>
+		</c:if>
+		<h3>추천수:${point }</h3>
 	</td></tr>
 </table>
 <br><br>

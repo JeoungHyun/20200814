@@ -125,7 +125,7 @@
 							<li><a href="#">My Portfolio</a></li>
 							<li><a href="#">My TIL</a></li>
 						</c:if>
-						<li><a href="#">로그아웃</a></li>
+						<li><a href="${path}/user/logout.dev">로그아웃</a></li>
 					</ul>
 				</li>
 			</c:if>

@@ -25,7 +25,7 @@ function commentList(){
             var a =''; 
             $.each(data, function(key, value){ 
                 a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-left: 400px; margin-right: 400px;">';
-                a += '<div class="commentInfo'+value.rno+'">'+'댓글번호 : '+value.rno+' / 작성자 : '+value.name;
+                a += '<div class="commentInfo'+value.rno+'">'+'작성자 :  '+value.name; 
                 a += '<a onclick="commentUpdate('+value.rno+',\''+value.content+'\');"> 수정 </a>';
                 a += '<a onclick="commentDelete('+value.rno+');"> 삭제 </a> </div>';
                 a += '<div class="commentContent'+value.rno+'"> <p> 내용 : '+value.content +'</p>';
@@ -45,12 +45,18 @@ function commentInsert(insertData){
         type : 'post',
         data : insertData,
         success : function(data){
-        	alert("AJAX 성공");
+        	
+        	alert("댓글 입력 성공");
             
                 commentList(); //댓글 작성 후 댓글 목록 reload
                 $('[name=content]').val('');
-            
+        	
+        	
+        		
+        	
+   
         }
+   
     });
 }
  

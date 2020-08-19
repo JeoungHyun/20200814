@@ -22,7 +22,6 @@ public class ReplyDao {
 	
 	
 	public int maxnum(Reply reply) {
-
 		return template.getMapper(ReplyMapper.class).maxnum(reply);
 	}
 	

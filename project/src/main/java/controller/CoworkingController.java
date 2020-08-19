@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -15,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import logic.Coworking;
 import logic.DevService;
+import logic.Hashtag;
 
 @Controller // controller 역할을 수행하는 @Component 객체이다.
 @RequestMapping("coworking") // path에 cart으로 들어오는 요청을 처리해준다. (/cart/)
@@ -31,8 +35,24 @@ public class CoworkingController {
 	
 	@GetMapping("main")
 	public ModelAndView main() {
-		
-		return null;
+		ModelAndView mav = new ModelAndView();
+		List <Coworking> list = service.getWorkinglist(null, null);
+		List <Hashtag> hash = service.getHashtaglist();
+		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+		for (int i = 0; i < list.size(); i++) {
+			map.put(list.get(i).getGno(), i);
+		}
+		for(Hashtag h : hash) {
+			if(map.containsKey(h.getWno())) {
+				list.get(map.get(h.getWno())).addHashlist(h.getHashname());
+			}
+			
+		}
+		System.out.println(list);
+		System.out.println(hash);
+		mav.addObject("list", list);
+		mav.addObject("hash", hash);
+		return mav;
 	}
 	
 	@GetMapping("register")

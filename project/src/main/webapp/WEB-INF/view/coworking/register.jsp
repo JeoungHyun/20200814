@@ -9,7 +9,7 @@
 <style type="text/css">
 .container {
 	margin: 0;
-	padding: 30px 30%;
+	padding: 30px 20%;
 }
 .container .content {
 	margin: 0;
@@ -48,7 +48,7 @@
 	width: calc(100% - 30px);
 	resize: none;
 }
-.container .content table tr:last-child input {
+.container .content table tr:last-child div {
 	margin: 0 20px;
 	width: 5em;
 	padding: 5px;
@@ -57,13 +57,59 @@
 	font-size: 15px;
 	font-weight: bold;
 	border-radius: 5px;
+	display: inline;
+}
+.container .content table tr:last-child div a {
+	text-decoration: none;
+	color: #000;
+}
+.hashtag-container {
+  margin: 0;
+}
+.hashtag {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  padding: 5px;
+  border-bottom: 1px solid #000;
+  width: calc(100% - 30px);
+}
+.hashtag .tag {
+  height: 30px;
+  margin: 0;
+  padding: 0 5px;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  color: #333;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2), inset 0 1px 1px #fff;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 5px;
+}
+.tag i {
+  font-size: 16px;
+  color: #666;
+  margin-left: 5px;
+}
+.hashtag input {
+  padding: 5px;
+  font-size: 16px;
+  border: 0;
+  outline: none;
+  font-family: 'Rubik';
+  color: #333;
+  flex: 1;
+  background: transparent;
 }
 </style>
 </head>
 <body>
 <div class="container">
 <div class="content">
-	<form:form modelAttribute="coworking" method="post" action="register.dev">
+	<form:form modelAttribute="coworking" method="post" action="register.dev" name="f">
 		<spring:hasBindErrors name="coworking"> 
 			<font color="red">
 				<c:forEach items="${errors.globalErrors}" var="error">
@@ -80,6 +126,8 @@
 		</td></tr>
 		<tr><td>프로젝트명</td><td><form:input path="title"/>
 			<font color="red"><form:errors path="title"/></font></td></tr>
+		<tr><td>관련 기술</td><td><div class="hashtag-container"><div class="hashtag"><input/>  
+  			</div></div></td></tr>
 		<tr><td>닉네임</td><td><form:input path="name"/>
 			<font color="red"><form:errors path="name"/></font></td></tr>
 		<tr><td>지역</td><td><form:input path="loc"/>
@@ -104,8 +152,8 @@
 		<tr><td>내용</td><td><form:textarea path="content"/>
 			<font color="red"><form:errors path="content"/></font></td></tr>
 		<tr><td colspan="2" align="center">
-			<input type="submit" value="신청">
-			<input type="reset" value="초기화">
+		<div><a href="javascript:document.f.submit()" id="submit">신청</a></div>
+		<div><a href="#">초기화</a></div>
 		</td></tr>	
 	</table>
 	</form:form>
@@ -126,7 +174,87 @@ $(function() {
 			$(this).prop('checked', true);
 		}
 	})
+	
 })
+</script> 
+<script type="text/javascript">
+$(function() {
+const tagContainer = document.querySelector('.hashtag');
+const input = document.querySelector('.hashtag input');
+
+let tags = [];
+
+function createTag(label) {
+  const div = document.createElement('div');
+  div.setAttribute('class', 'tag');
+  const span = document.createElement('span');
+  span.innerHTML = label;
+  const closeIcon = document.createElement('i');
+  closeIcon.innerHTML = '';
+  closeIcon.setAttribute('class', 'fa fa-times');
+  closeIcon.setAttribute('data-item', label);
+  div.appendChild(span);
+  div.appendChild(closeIcon);
+  return div;
+}
+
+function clearTags() {
+  document.querySelectorAll('.tag').forEach(tag => {
+    tag.parentElement.removeChild(tag);
+  });
+}
+
+function addTags() {
+  clearTags();
+  tags.slice().reverse().forEach(tag => {
+    tagContainer.prepend(createTag(tag));
+  });
+}
+
+input.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+	if (tags.length < 5) {
+      e.target.value.split(',').forEach(tag => {
+        tags.push(tag);  
+      });
+      
+      addTags();
+      input.value = '';
+      console.log(tags);
+	}else {
+		alert("기술을 5개까지만 입력이 가능합니다.")
+	}
+    }
+});
+document.addEventListener('click', (e) => {
+  console.log(e.target.tagName);
+  if (e.target.tagName === 'I') {
+    const tagLabel = e.target.getAttribute('data-item');
+    const index = tags.indexOf(tagLabel);
+    tags = [...tags.slice(0, index), ...tags.slice(index+1)];
+    addTags();    
+  }
+})
+
+input.focus();
+
+$("#submit").on("click", function () {
+	var hash = {hash : tags};
+	console.log(hash);
+	
+	$.ajax({
+		url: '${path}/ajax/hashtag.dev',
+		type: "post",
+		data: hash,
+		traditional: true,
+		success: function(response){
+		}
+	})
+	return true;
+})
+	
+})
+
 </script>
 </body>
 </html>

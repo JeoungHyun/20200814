@@ -80,7 +80,12 @@ public class UserController {
 	@GetMapping(value = { "mypage", "delete" })
 	public ModelAndView checkview(String id, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		User user = service.getUser(id);
+		User user;
+		if(id == null) {
+			user = (User)session.getAttribute("loginUser");
+		} else {
+			user = service.getUser(id);
+		}
 		mav.addObject("user", user);
 		return mav;
 	}

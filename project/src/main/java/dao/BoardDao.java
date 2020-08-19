@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import dao.mapper.BoardMapper;
 import logic.Board;
+import logic.goodorbad;
 
 @Repository
 public class BoardDao {	
@@ -57,11 +58,12 @@ public class BoardDao {
 		param.clear();
 
 		param.put("searchtype", searchtype);
-		param.put("searchcontent", "%" + searchcontent + "%");
+		param.put("searchcontent", searchcontent);
 		param.put("startrow", (pageNum - 1) * limit);
 		param.put("limit", limit);
 		param.put("no",no);
-		System.out.println(no);
+		System.out.println(param);
+
 		return template.getMapper(BoardMapper.class).list(param);
 	}
 
@@ -89,6 +91,47 @@ public class BoardDao {
 	public void delete(Board board) {
 
 		template.getMapper(BoardMapper.class).delete(board);
+	}
+
+	public void likeit(Integer no, Integer bno,Integer gno, String name) {
+		param.clear();
+		param.put("no", no);
+		param.put("bno", bno);
+		param.put("gno", gno);
+		param.put("name", name);
+		template.getMapper(BoardMapper.class).likeit(param);
+		
+	}
+
+	public int maxgno(Integer no, Integer bno) {
+		param.clear();
+		param.put("no", no);
+		param.put("bno", bno);
+		return template.getMapper(BoardMapper.class).maxgno(param);
+	}
+
+	public int likechk(Integer no, Integer bno, String name) {
+		param.clear();
+		param.put("no", no);
+		param.put("bno", bno);
+		param.put("name", name);
+		
+		return template.getMapper(BoardMapper.class).likechk(param);
+	}
+
+	public List<goodorbad> goodorbadlist(Integer no,Integer pageNum, int limit) {
+		param.clear();
+		param.put("startrow", (pageNum - 1) * limit);
+		param.put("limit", limit);
+		param.put("no",no);	
+		return template.getMapper(BoardMapper.class).goodorbadlist(param);
+	}
+
+	public int getpoint(Integer no, Integer bno) {
+		param.clear();
+		param.put("no",no);	
+		param.put("bno",bno);	
+		return template.getMapper(BoardMapper.class).getpoint(param);
 	}
 
 

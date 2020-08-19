@@ -6,83 +6,126 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style type="text/css">
-body {
-	margin: 0;
-	padding: 0;
-	font-family: sans-serif;
-	/* background: url(${path}/img/1.jpg); */
-	background-size: cover;
-	transition: 2s;
-}
-.box{
-	position: absolute;
-	top: 400px;
-	left: 50%;
-	transform:  translate(-50%, -50%);
-	width: 400px;
-	padding: 40px;
-	box-sizing: border-box;
-	border-radius: 10px;
-	background: transparent;
-	border : 1px solid #8572EE;
-}
-.box h1{
-	margin: 0 0 30px;
-	padding: 0;
-	color: #000000;
-	text-align: center;
-}
-.box .inputBox{
-	position: relative;
-}
-.box .inputBox input{
-	width: 100%;
-	padding: 10px 0;
-	font-size: 16px;
-	color: #000000;
-	letter-spacing: 1px;
-	margin-bottom: 30px;
-	border: none;
-	outline: none;
-	background: transparent;
-	border-bottom: 1px solid #000000;
-}
-.box .inputBox label {
-	position: absolute;
-	top: 0;
-	left: 0;
-	padding: 10px 0;
-	font-size: 16px;
-	letter-spacing: 1px;
-	color: grey;
-	pointer-events: none;
-	transition: .5s;
-}
-.box .inputBox input:focus ~ label,
-.box .inputBox input:valid ~ label{
-	top: -18px;
-	left: 0;
-	color: #03a9f4;
-	font-size: 12px;
-}
-.box input[type="submit"] {
-	background: transparent;
-	border: none;
-	outline: none;
-	color: #fff;
-	background: #8572EE;
-	padding: 10px 20px;
-	margin : 0 0 30px 0;
-	cursor: pointer;
-	border-radius: 5px;
-}
-a {
-	text-decoration : none;
-	color : #8572EE;
-}
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: sans-serif;
+		/* background: url(${path}/img/1.jpg); */
+		background-size: cover;
+		transition: 2s;
+	}
+	.box{
+		position: absolute;
+		top: 400px;
+		left: 50%;
+		transform:  translate(-50%, -50%);
+		width: 400px;
+		padding: 40px;
+		box-sizing: border-box;
+		border-radius: 10px;
+		background: transparent;
+		border : 1px solid #8572EE;
+	}
+	.box h1{
+		margin: 0 0 30px;
+		padding: 0;
+		color: #000000;
+		text-align: center;
+	}
+	.box .inputBox{
+		position: relative;
+	}
+	.box .inputBox input{
+		width: 100%;
+		padding: 10px 0;
+		font-size: 16px;
+		color: #000000;
+		letter-spacing: 1px;
+		margin-bottom: 30px;
+		border: none;
+		outline: none;
+		background: transparent;
+		border-bottom: 1px solid #000000;
+	}
+	.box .inputBox label {
+		position: absolute;
+		top: 0;
+		left: 0;
+		padding: 10px 0;
+		font-size: 16px;
+		letter-spacing: 1px;
+		color: grey;
+		pointer-events: none;
+		transition: .5s;
+	}
+	.box .inputBox input:focus ~ label,
+	.box .inputBox input:valid ~ label{
+		top: -18px;
+		left: 0;
+		color: #03a9f4;
+		font-size: 12px;
+	}
+	.box input[type="submit"] {
+		background: transparent;
+		border: none;
+		outline: none;
+		color: #fff;
+		background: #8572EE;
+		padding: 10px 20px;
+		margin : 0 0 30px 0;
+		cursor: pointer;
+		border-radius: 5px;
+	}
+	a {
+		text-decoration : none;
+		color : #8572EE;
+	}
+	.modalfont {
+		font-weight : bold;
+		font-size : 15px;
+		padding : 10px;
+	}
+	.modalinput {
+		position : absolute;
+		left : 120px;
+	}
 </style>
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(function(){
+	$("#findID").on("click",function () {
+		$.ajax({
+			url : "${path}/ajax/findid.dev",
+			type : "post",
+			data : {
+				name : $("#name").val(),
+				email : $("#email").val()
+			},
+			success : function(a) {
+				console.log(a);
+				$(".modalinput").val("");
+				$(".modalinput").hide();
+				$(".modalfont").hide();
+				$("#find-id").text(a);
+				$("#find-id").show();
+			},
+			error : function(e){
+				alert("오류 발생")
+			}
+		})
+	})
+	
+	$("#modal-close").on("click", function () {
+		$(".modalfont").show();
+		$(".modalinput").show();
+		$("#find-id").hide();
+	})
+})
+</script>
 </head>
 <body>
 	<form:form modelAttribute="user" method="post" action="login.dev">
@@ -108,10 +151,34 @@ a {
 			<input type="submit" value="로그인" style="width:100%;"><br>
 			<div align="center">
 				<a href="${path}/user/join.dev">회원가입</a>&nbsp;|&nbsp;
-				<a href="${path}/user/findId.dev">아이디 찾기</a>&nbsp;|&nbsp;
-				<a href="${path}/user/findPw.dev">비밀번호 찾기</a>
+				<a href="#" data-toggle="modal" data-target="#findId">아이디 찾기</a>&nbsp;|&nbsp;
+				<a href="#" data-toggle="modal" data-target="#findPw">비밀번호 찾기</a>
 			</div>
 		</div>
+		
+			<div class="modal fade" id="findId" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title" id="exampleModalLabel">아이디 찾기</h4>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body" id="find-id-modal-body">
+			        	<font class="modalfont">이름</font> <input type="text" id="name" class="modalinput"><br><br>
+			        	<font class="modalfont">이메일</font> <input type="text" id="email" class="modalinput">
+			        	<div id="find-id"></div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-close">닫기</button>
+			        <button type="button" class="btn btn-primary" id="findID">아이디 찾기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+		
 	</form:form>
 	<%--
 		<script type="text/javascript">

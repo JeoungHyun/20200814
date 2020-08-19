@@ -51,7 +51,7 @@
 			<input type="hidden" name="pageNum" value="1">
 			<select name="searchtype" style="width:100px;">
 				<option value="">선택하세요</option>
-				<option value="subject">제목</option>
+				<option value="title">제목</option>
 				<option value="name">작성자</option>
 				<option value="content">내용</option>
 			</select>
@@ -68,7 +68,7 @@
 		<c:if test="${no } ==4">
 		<tr><td colspan="6">QnA 게시판</td>
 		</c:if>
-		<tr><th width="5%">번호</th><th width="50%;">제목</th><th width="10%">글쓴이</th>
+		<tr><th width="5%">번호</th><th width="50%;">제목</th><th width="10%">작성자</th>
 		<th width="5%">추천</th><th width="12%">기술</th><th width="8%">날짜</th></tr>
 		<c:forEach var="board" items="${boardlist}">
 			<tr><td>${boardno}</td>
@@ -81,7 +81,7 @@
 			<td>${board.name}</td>
 			<fmt:formatDate var="regdate" value="${board.regdate}" pattern="yyyyMMdd"/>
 
-			<td>추천수</td>
+			<td>${board.point }</td>
 			
 			<td>궁금한 기술</td>
 			

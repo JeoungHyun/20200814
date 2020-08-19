@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import logic.Board;
+import logic.goodorbad;
 
 public interface BoardMapper {
 
@@ -28,14 +29,20 @@ public interface BoardMapper {
 			+ "</script>"})
 	int count(Map<String, Object> param);
 
+	
 	@Select({"<script>"
-			+ "select no, bno, name, title,"
-	         + "content, regdate, open "
-	         + " from board "
-	         + "<if test='searchtype != null and searchcontent != null'> where ${searchtype} like #{searchcontent} </if>"
-	         + "<if test='searchtype == null and searchcontent == null'> where no=#{no} </if>"
-	         +" where no = #{no} order by bno desc limit #{startrow} , #{limit} "
+			+ "SELECT b.no NO, bno, NAME, title, content, regdate, IFNULL(tot,0) point FROM board b LEFT JOIN (SELECT NO, wno, IFNULL(COUNT(wno),0) tot FROM goodorbad WHERE NO = no GROUP BY wno) g ON  g.no = b.no AND bno = wno "
+			+ "<if test='searchtype == null and searchcontent == null'> where b.no= #{no} order by bno desc limit #{startrow} , #{limit} </if> "
+			+ "<if test='searchtype != null and searchcontent != null'> where ${searchtype} like '%${searchcontent}%' and b.no = #{no} order by bno desc limit #{startrow} , #{limit}  </if> "
 			+ "</script>"})
+//	@Select({"<script>"
+//			+ "select no, bno, name, title,"
+//	         + "content, regdate, open "
+//	         + " from board "
+//	         + "<if test='searchtype != null and searchcontent != null'> where ${searchtype} like #{searchcontent} </if>"
+//	         + "<if test='searchtype == null and searchcontent == null'> where no=#{no} </if>"
+//	         +" where no = #{no} order by bno desc limit #{startrow} , #{limit} "
+//			+ "</script>"})
 	List<Board> list(Map<String, Object> param);
 
 	
@@ -60,6 +67,37 @@ public interface BoardMapper {
 
 	@Select("select DATE_FORMAT(regdate,'%Y-%m-%d') date , count(*) cnt from board group by DATE_FORMAT(regdate,'%Y-%m-%d') order by cnt desc LIMIT 0,7")
 	List<Map<String, Object>> graph2();
+
+	
+	
+	
+	@Insert("insert into goodorbad (no,wno,gno,name,regdate) values (#{no},#{bno},#{gno},#{name},now()) ")
+	void likeit(Map<String, Object> param);
+
+	
+//	@Insert("insert into board (no,bno,name,title,content,regdate) "
+//			+ "values (#{no},#{bno},#{name},#{title},#{content},now() )")
+//	void insert(Board board);
+	
+	
+	@Select("select ifnull(max(gno),0) from goodorbad where NO=#{no} AND wno=#{bno}")
+	int maxgno(Map<String, Object> param);
+
+	@Select("select ifnull(max(gno),0) from goodorbad where NO=#{no} AND wno=#{bno} and name = #{name}")
+	int likechk(Map<String, Object> param);
+
+	
+	
+	@Select({"<script>"
+			+ "select * "
+	         + " from goodorbad "
+	         +" where no = #{no} order by bno desc limit #{startrow} , #{limit} "
+			+ "</script>"})
+	List<goodorbad> goodorbadlist(Map<String, Object> param);
+
+	
+	@Select("SELECT IFNULL(COUNT(*),0) FROM goodorbad WHERE NO=#{no} AND wno=#{bno}")
+	int getpoint(Map<String, Object> param);
 
 	
 

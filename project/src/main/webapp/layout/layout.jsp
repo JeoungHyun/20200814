@@ -30,15 +30,15 @@
 				<li><a href="#"><i class="fa fa-bell"></i></a></li>
 				<li class="sub-menu"><a href="#"><i class="fa fa-user-circle"></i></a>
 					<ul id="final">
-						<c:if test="${loginUser.id.equals('admin')}">
+						<c:if test="${sessionScope.loginUser.id.equals('admin')}">
 				        	<li><a href="${path}/admin/adminpage.dev">관리자 페이지</a></li>
 				        </c:if>
-				        <c:if test="${!loginUser.id.equals('admin')}">
+				        <c:if test="${!sessionScope.loginUser.id.equals('admin')}">
 							<li><a href="${path}/user/mypage.dev">회원정보 수정</a></li>
 							<li><a href="#">My Portfolio</a></li>
 							<li><a href="#">My TIL</a></li>
 						</c:if>
-						<li><a href="#">로그아웃</a></li>
+						<li><a href="${path}/user/logout.dev">로그아웃</a></li>
 					</ul>
 				</li>
 			</c:if>
@@ -65,5 +65,8 @@
 	<div class="main">
 		<decorator:body></decorator:body>
 	</div>
+	<script type="text/javascript">
+		console.log("${sessionScope}");
+	</script>
 </body>
 </html>
