@@ -16,4 +16,6 @@ public class GroupController {
 		ModelAndView mav = new ModelAndView();
 		return mav;
 	}
+	
+	
 }

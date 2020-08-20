@@ -44,6 +44,7 @@
 
 	<tr><td align="center">제목</td><td><form:input path="title" size="100%;" />
 	</td></tr>
+	<tr><td>사용될 기술</td><td><input type="text" /></td></tr>
 	<tr><td align="center">내용</td><td>
 	<form:textarea path="content" rows="15" cols="80"/>
 	<script>CKEDITOR.replace("content",{

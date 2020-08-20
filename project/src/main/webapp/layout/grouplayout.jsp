@@ -136,8 +136,8 @@
 				<li class="menu-li"><a href="#">TIL</a></li>
 				<li class="sub-menu menu-li"><a href="#">Community</a>
 					<ul>
-						<li><a href="${path}/board/list.dev">Q&A게시판</a></li>
-						<li><a href="#">자유게시판</a></li>
+						<li><a href="${path}/board/list.dev?no=4">Q&A게시판</a></li>
+						<li><a href="${path}/board/list.dev?no=5">자유게시판</a></li>
 					</ul></li>
 				<li class="sub-menu menu-li"><a href="#">Co-Working</a>
 					<ul>

@@ -69,6 +69,7 @@ public class BoardController {
 
 		int limit = 10;// 한페이지에 출력할 게시물 건수
 		int listcount = service.boardCount(no, searchtype, searchcontent); // 등록 게시물 건수
+		
 		List<Board> boardlist = service.boardlist(no, pageNum, limit, searchtype, searchcontent);
 		
 		

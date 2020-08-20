@@ -24,7 +24,7 @@ public interface BoardMapper {
 	
 	@Select({"<script> "
 			+ "select count(*) from board "
-			+ "<if test='searchtype != null and searchcontent != null '> where ${searchtype} like '%${searchcontent}%' </if>"
+			+ "<if test='searchtype != null and searchcontent != null '> where ${searchtype} like '%${searchcontent}%' and no=${no} </if>"
 			+ "<if test='searchtype == null and searchcontent == null '> where no=${no} </if>"
 			+ "</script>"})
 	int count(Map<String, Object> param);
