@@ -123,7 +123,7 @@ CREATE TABLE Reply
 	grp int(11),
 	grplevel int(11),
 	grpstep int(11),
-	PRIMARY KEY (no, rno,bno)
+	PRIMARY KEY (no, rno)
 );
 
 

@@ -19,11 +19,21 @@ public class Coworking {
 	private Date enddate;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date deadline;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date regdate;
 	private String process;
 	private String grade;
 	private String loc;
 	private List<String> hashlist = new ArrayList<String>();
 	
+	
+	
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
 	public List<String> getHashlist() {
 		return hashlist;
 	}

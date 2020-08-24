@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,7 +18,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import exception.LoginException;
 import logic.DevService;
+import logic.Message;
 import logic.User;
+import logic.UserFile;
 
 @Controller
 @RequestMapping("user")
@@ -71,6 +75,16 @@ public class UserController {
 			user.setUno(uno);
 			user.setAuth("일반회원");
 			service.userInsert(user);
+			
+			UserFile f = new UserFile();
+			f.setNo(1);
+			f.setWno(user.getUno());
+			f.setFno(1);
+			f.setName(user.getName());
+			f.setFilename(user.getName()+".jpg");
+			f.setFileurl("profile/");
+			service.insert_file(f);
+			
 			mav.setViewName("redirect:login.dev");
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();
@@ -142,4 +156,13 @@ public class UserController {
 		return "redirect:login.dev";
 	}
 
+	@GetMapping("message")
+	public ModelAndView message(HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		User loginUser = (User) session.getAttribute("loginUser");
+		List<Message> msglist = service.getMessageList(loginUser.getName());
+		mav.addObject("msglist", msglist);
+		return mav;
+	}
+	
 }

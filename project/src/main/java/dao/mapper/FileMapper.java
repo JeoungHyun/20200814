@@ -3,15 +3,16 @@ package dao.mapper;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
-import logic.SNSFile;
+import logic.UserFile;
 
 public interface FileMapper {
 
-	@Select("select ifnull(max(fno), 0)+1 fno from file")
-	SNSFile maxfno();
+	@Insert("insert into file (no, wno, fno, name, filename, fileurl, regdate) values(#{no},#{wno},#{fno},#{name},#{filename},#{fileurl},now())")
+	void insert_file(UserFile f);
 
-	@Insert("insert into file (fno, wno, wno2, wno3, fwhere, name, filename, fileurl, regdate) values(#{fno},#{wno},#{wno2},#{wno3},#{fwhere},#{name},#{filename},#{fileurl},now())")
-	void insert_file(SNSFile f);
+	@Update("update file set filename = #{filename}, fileurl= #{fileurl}, regdate = now() where no=#{no} and wno=#{wno} and fno=#{fno}")
+	void update_file(UserFile f);
 
 }

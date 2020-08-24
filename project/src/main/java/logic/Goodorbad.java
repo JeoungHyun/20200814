@@ -2,7 +2,7 @@ package logic;
 
 import java.util.Date;
 
-public class goodorbad {
+public class Goodorbad {
 
 	
 	private int no;

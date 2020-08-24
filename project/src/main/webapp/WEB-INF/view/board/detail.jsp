@@ -78,12 +78,15 @@
 		</c:if>
 		<a href="list.dev?no=${no }">[게시물목록]</a>
 		
+		<c:if test="${!(no >=100) }">
 		<c:if test="${no!=10 }">
 		<c:if test="${!empty loginUser.name  }">
 		<a href="likeit.dev?no=${board.no}&&bno=${board.bno}">[추천하기]</a>
 		</c:if>
-		
+		</c:if>
+		<c:if test="${no==4 || no==5 }">
 		<h3>추천수:${point }</h3>
+		</c:if>
 		</c:if>
 	</td></tr>
 </table>

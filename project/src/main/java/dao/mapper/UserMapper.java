@@ -33,4 +33,10 @@ public interface UserMapper {
 
 	@Select("select id from user where name=#{name} and email=#{email}")
 	String findId(Map<String, Object> param);
+	
+	@Select("select pw from user where id=#{id} and name=#{name} and email=#{email}")
+	String findPw(Map<String, Object> param);
+
+	@Update("update user set pw=#{newpw} where id=#{id}")
+	void changepw(Map<String, Object> param);
 }

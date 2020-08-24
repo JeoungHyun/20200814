@@ -22,7 +22,6 @@ import exception.BoardException;
 import logic.Board;
 import logic.DevService;
 import logic.User;
-import logic.goodorbad;
 
 @Controller
 @RequestMapping("board")
@@ -69,11 +68,7 @@ public class BoardController {
 
 		int limit = 10;// 한페이지에 출력할 게시물 건수
 		int listcount = service.boardCount(no, searchtype, searchcontent); // 등록 게시물 건수
-		
 		List<Board> boardlist = service.boardlist(no, pageNum, limit, searchtype, searchcontent);
-		
-		
-		
 		int maxpage = (int) ((double) listcount / limit + 0.95);
 		int startpage = ((int) (pageNum / 10.0 + 0.9) - 1) * 10 + 1;// 시작페이지번호
 		int endpage = startpage + 9;// 종료페이지 번호
@@ -88,7 +83,6 @@ public class BoardController {
 		mav.addObject("listcount", listcount);
 		mav.addObject("boardlist", boardlist);
 		mav.addObject("boardno", boardno);
-		
 		mav.addObject("today", // "20200713"
 				new SimpleDateFormat("yyyyMMdd").format(new Date()));
 		return mav;
@@ -164,7 +158,7 @@ public class BoardController {
 		}
 		return mav;
 	}
-
+	
 	@GetMapping("likeit")
 	public ModelAndView likeit(Board board, Integer no, Integer bno, HttpSession session) {
 		ModelAndView mav = new ModelAndView();

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import dao.mapper.FileMapper;
-import logic.SNSFile;
+import logic.UserFile;
 
 
 @Repository
@@ -18,11 +18,11 @@ public class fileDao {
 	private SqlSessionTemplate template;
 	private Map <String, Object> param = new HashMap <String, Object> ();
 	
-	public SNSFile maxfno() {
-		return template.getMapper(FileMapper.class).maxfno();
+	public void insert_file(UserFile f) {
+		template.getMapper(FileMapper.class).insert_file(f);
 	}
 
-	public void insert_file(SNSFile f) {
-		template.getMapper(FileMapper.class).insert_file(f);
+	public void update_file(UserFile f) {
+		template.getMapper(FileMapper.class).update_file(f);
 	}
 }

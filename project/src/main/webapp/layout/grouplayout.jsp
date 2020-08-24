@@ -107,14 +107,16 @@
 <body>
 <header>
 		<div class="logo"><a href="${path}/main/home.dev">Logo</a></div>
-		<nav>
+		<nav class="nav1">
 			<ul>
-				<c:if test="${loginUser == null}">
+			<c:if test="${loginUser == null}">
 				<li><a href="${path}/user/login.dev"><i class="fa fa-sign-in"></i></a></li>
 			</c:if>
 			<c:if test="${loginUser != null}">
-				<li><a href="#"><i class="fa fa-envelope"></i></a></li>
-				<li><a href="#"><i class="fa fa-bell"></i></a></li>
+				<c:if test="${!sessionScope.loginUser.id.equals('admin')}">
+					<li><a href="${path}/user/message.dev?id=${sessionScope.loginUser.id}"><i class="fa fa-envelope"></i></a></li>
+					<li><a href="#"><i class="fa fa-bell"></i></a></li>
+				</c:if>
 				<li class="sub-menu"><a href="#"><i class="fa fa-user-circle"></i></a>
 					<ul id="final">
 						<c:if test="${sessionScope.loginUser.id.equals('admin')}">
@@ -122,8 +124,8 @@
 				        </c:if>
 				        <c:if test="${!sessionScope.loginUser.id.equals('admin')}">
 							<li><a href="${path}/user/mypage.dev">회원정보 수정</a></li>
-							<li><a href="#">My Portfolio</a></li>
-							<li><a href="#">My TIL</a></li>
+							<li><a href="${path}/portfolio/portfolio.dev?name=${sessionScope.loginUser.name}">My Portfolio</a></li>
+							<li><a href="${path}/til/mytil.dev">TIL</a></li>
 						</c:if>
 						<li><a href="${path}/user/logout.dev">로그아웃</a></li>
 					</ul>
@@ -131,7 +133,7 @@
 			</c:if>
 			</ul>
 		</nav>
-		<nav>
+		<nav class="nav2">
 			<ul class="nav-menu">
 				<li class="menu-li"><a href="#">TIL</a></li>
 				<li class="sub-menu menu-li"><a href="#">Community</a>
@@ -145,6 +147,7 @@
 						<li><a href="${path}/group/main.dev">My Group</a></li>
 					</ul>
 				</li>
+				<li><a href="${path}/board/list.dev?no=10">건의게시판</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -155,15 +158,34 @@
 			<div class="navbar">
 				<div class="nav">
 					<ul>
-						<li>-스터디-
-							<ul></ul>
-						</li>
-						<li>-프로젝트-
-							<ul></ul>
-						</li>
-						<li>-공모전-
-							<ul></ul>
-						</li>
+						<li>-스터디</li>
+							<c:forEach items="${group}" var="gr">
+								<li>
+									<c:if test="${gr.category == '스터디' }">
+										<a href="${path}/group/main.dev?gno=${gr.gno}">${gr.title}</a>
+									</c:if>
+								</li>
+							</c:forEach>
+					</ul>
+					<ul>
+						<li>-공모전</li>
+							<c:forEach items="${group}" var="gr">
+								<li>
+									<c:if test="${gr.category == '공모전' }">
+										<a href="${path}/group/main.dev?gno=${gr.gno}">${gr.title}</a>
+									</c:if>
+								</li>
+							</c:forEach>
+					</ul>
+					<ul>
+						<li>-프로젝트</li>
+							<c:forEach items="${group}" var="gr">
+								<li>
+									<c:if test="${gr.category == '프로젝트' }">
+										<a href="${path}/group/main.dev?gno=${gr.gno}">${gr.title}</a>
+									</c:if>
+								</li>
+							</c:forEach>
 					</ul>
 				</div>
 			</div>

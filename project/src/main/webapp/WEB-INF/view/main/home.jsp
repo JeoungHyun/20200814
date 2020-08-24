@@ -7,11 +7,78 @@
 <meta charset="UTF-8">
 <title>Home</title>
 <style type="text/css">
-.slider-box {
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+}
+section {
+	padding: 100px;
+	min-height: 100vh;
+}
+section:first-child{
+	background: url("${path}/img/gb.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+section .textBx {
+	color: #fff;
+	text-align: center;
+	margin-top: 50px;
+}
+section .h2 {
+	color: #fff;
+	text-align: center;
+	font-style: italic;
+	opacity: 0.3;
+	font-size: 50px;
+	position: relative;
+	top: 90px;
+}
+section .textBx h3 {
+	font-size: 18px;
+}
+section .textBx h2 {
+	color: #aa85d4;
+	font-size: 100px;
+	text-shadow: 3px 2px 2px #000;
+}
+section .service-content {
+	display: flex;
+	justify-content: space-between;
+	align-content: center;
+	flex-wrap: wrap;
+	padding: 170px 25vw 40px;
+	background: transparent;
+}
+section .service-content .serviceBx {
+	padding: 20px;
+	background: #c0bdc33b;
+	color: #fff;
+	text-align: center;
+	transition: 0.5s;
+	box-shadow: 3px 3px 3px rgba(0,0,0,0.5);
+	border-radius: 20px;
+	opacity: 0.8;
+	margin-top: 50px;
+}
+section .service-content .serviceBx:hover {
+	background: #2196f3;
+}
+section .service-content .serviceBx img{
+	max-height: 50px;
+	filter: invert(1);
+}
+section .service-content .serviceBx p {
+	margin-top: 20px;
+	font-weight: bold;
+}
+section .slider-box {
 	height: 300px;
 	border: 3px solid #000;
 }
-.slider {
+section .slider-box .slider {
 	background: url(${path}/img/s1.png);
 	background-size: cover;
 	height: 300px;
@@ -19,236 +86,59 @@
 	margin: 0 auto;
 	transition: 3s;
 }
-.slider-box {
-	margin: 20px;
-	margin-bottom: 50px;
+section .titleBx {
+	text-align: left;
+	margin-top: 50px;
 }
-.content {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+section .titleBx h2 {
+	font-size: 30px;
 }
-.content .board {
-	padding: 0 50px;
-}
-.content .board table {
-	width: 500px;
-	border-collapse: collapse;
-	border-top: 3px solid #000;
-	border-bottom: 3px solid #000;
-}
-.content .board table td{
-	border-collapse: collapse;
-	border-top: 1px solid #000;
-	text-align: center;
-}
-.content .board table td{
-	text-align: center;
-}
-.content .board table caption{
-	font-size: 20px;
-	margin-bottom: 20px;
+section .titleBx h2 span{
+	font-size: 50px;
 }
 </style>
 </head>
 <body>
-<div class="slider-box">
-	<div class="slider"></div>
-</div>
+<section>
+			<div class="textBx">
+				<h3>개발자를 위한 자기계발 사이트</h3>
+				<h2>Build-Dev</h2>
+			</div>
+			<h2 class="h2">Our Services</h2>
+			<div class="service-content">
+				<div class="serviceBx">
+					<img src="${path}/img/icon5.png">
+					<h3>Today I Learned</h3>
+				</div>
+				<div class="serviceBx">
+					<img src="${path}/img/talk.png">
+					<h3>Community</h3>
+				</div>
+				<div class="serviceBx">
+					<img src="${path}/img/coworking.png">
+					<h3>Co-Working</h3>
+					<!-- <p>혼자하지 말고 같이 해보세요.</p> -->
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="titleBx">
+				<h2><span>T</span>oday <span>I</span> <span>L</span>earned : 본인의 지식을 정리해 보세요.</h2>
+			</div>
+		</section>
+		<section>
+			<div class="titleBx">
+				<h2><span>C</span>omunity : 이곳에서 오류, 에러, 고민을 풀어보세요.</h2>
+			</div>
+		</section>
+		<section>
+			<div class="titleBx">
+				<h2><span>C</span>o-<span>W</span>orking : 혼자하지 말고 같이 해보세요.</h2>
+			</div>
+		</section>
+		<section>
+		
+		</section>
 
-<div class="content">
-	<div class="board">
-		<table>
-			<caption>Co-Working</caption>
-			<tr>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>등록일</th>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>테스트 입니다.</td>
-				<td>테스트 중</td>
-				<td>2020-08-10</td>
-			</tr>
-		</table>
-	</div>
-	<div class="board">
-		<table>
-			<caption>Q&A 게시판</caption>
-			<tr>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>등록일</th>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-			<tr>
-				<td>Test123</td>
-				<td>Test123</td>
-				<td>2020-08-10</td>
-			</tr>
-		</table>
-	</div>
-	<div class="board">
-		<table>
-			<caption>자유 게시판</caption>
-			<tr>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>등록일</th>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-			<tr>
-				<td>제목 입니다.</td>
-				<td>작성자 입니다.</td>
-				<td>등록일 입니다.</td>
-			</tr>
-		</table>
-	</div>
-</div>
-<script type="text/javascript">
-$(function() {
-	var imgList = ["s2.png","s3.png","s1.png"];
-	var idx = 0;
-	setInterval(function() {
-		if(idx == imgList.length) idx = 0;
-		$(".slider").css("background", "url(${path}/img/"+imgList[idx]+")");
-		$(".slider").css("background-size", "cover");
-		idx++;
-	}, 5000)
-})
-</script>
 </body>
 </html>

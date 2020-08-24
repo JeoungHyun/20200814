@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/view/jspHeader.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,55 +65,33 @@
 			<th>Comment</th>
 			<th colspan="2"></th>
 		</tr>
-		<tr>
-			<td>2</td>
-			<td>김승찬</td>
-			<td>Java</td>
-			<td>010-5555-9999</td>
-			<td>rnel@naver.com</td>
-			<td>잘부탁드립니다.</td>
-			<td>수락</td>
-			<td>거절</td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>원숭이</td>
-			<td>Java</td>
-			<td>010-4555-8899</td>
-			<td>rn123el@naver.com</td>
-			<td>잘부탁드립니다.</td>
-			<td>수락</td>
-			<td>거절</td>
-		</tr>
+		<c:forEach items="${apply}" var="apply">
+			<tr>
+				<td>${apply.gno }</td>
+				<td>${apply.name }</td>
+				<td>${apply.lang }</td>
+				<td>${apply.phone }</td>
+				<td>${apply.email }</td>
+				<td>${apply.comment }</td>
+				<td><a href="accept.dev?name=${apply.name}&gno=${apply.gno}">수락</a></td>
+				<td><a href="deport.dev?name=${apply.name}&gno=${apply.gno}">거절</a></td>
+			</tr>
+		</c:forEach>
 	</table>
 </div>
 <div class="boardinfo">
 	<div class="header">팀원관리</div>
 	<table>
-		<tr>
-			<th>No</th>
-			<th>Name</th>
-			<th>Language</th>
-			<th>Phone number</th>
-			<th>Email</th>
-			<th></th>
-		</tr>
-		<tr>
-			<td>2</td>
-			<td>이헌성</td>
-			<td>Java</td>
-			<td>010-3333-9249</td>
-			<td>ghregr1@naver.com</td>
-			<td>추방</td>
-		</tr>
-		<tr>
-			<td>1</td>
-			<td>김독자</td>
-			<td>Java</td>
-			<td>010-5555-1234</td>
-			<td>asdsdf@naver.com</td>
-			<td>추방</td>
-		</tr>
+		<c:forEach items="${member}" var="member">
+			<tr>
+				<td>${member.gno }</td>
+				<td>${member.name }</td>
+				<td>${member.lang }</td>
+				<td>${member.phone }</td>
+				<td>${member.email }</td>
+				<td><a href="deport.dev?name=${member.name}&gno=${member.gno}">추방</a></td>
+			</tr>
+		</c:forEach>
 	</table>
 </div>
 </body>

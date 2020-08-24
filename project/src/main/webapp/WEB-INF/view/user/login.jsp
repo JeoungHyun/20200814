@@ -94,6 +94,11 @@
 		position : absolute;
 		left : 120px;
 	}
+	.find-result {
+		text-align : center;
+		font-size : 20px;
+		padding-bottom : 30px;
+	}
 </style>
 <script>
 $(function(){
@@ -102,16 +107,15 @@ $(function(){
 			url : "${path}/ajax/findid.dev",
 			type : "post",
 			data : {
-				name : $("#name").val(),
-				email : $("#email").val()
+				name : $("#findid-name").val(),
+				email : $("#findid-email").val()
 			},
-			success : function(a) {
-				console.log(a);
+			success : function(s) {
 				$(".modalinput").val("");
 				$(".modalinput").hide();
 				$(".modalfont").hide();
-				$("#find-id").text(a);
-				$("#find-id").show();
+				$(".find-result").text(s);
+				$(".find-result").show();
 			},
 			error : function(e){
 				alert("오류 발생")
@@ -119,10 +123,32 @@ $(function(){
 		})
 	})
 	
-	$("#modal-close").on("click", function () {
+	$("#findPW").on("click",function () {
+		$.ajax({
+			url : "${path}/ajax/findpw.dev",
+			type : "post",
+			data : {
+				id : $("#findpw-id").val(),
+				name : $("#findpw-name").val(),
+				email : $("#findpw-email").val()
+			},
+			success : function(a) {
+				$(".modalinput").val("");
+				$(".modalinput").hide();
+				$(".modalfont").hide();
+				$(".find-result").text(a);
+				$(".find-result").show();
+			},
+			error : function(e){
+				alert("오류 발생")
+			}
+		})
+	})
+	
+	$(".modal-close").on("click", function () {
 		$(".modalfont").show();
 		$(".modalinput").show();
-		$("#find-id").hide();
+		$(".find-result").hide();
 	})
 })
 </script>
@@ -151,28 +177,51 @@ $(function(){
 			<input type="submit" value="로그인" style="width:100%;"><br>
 			<div align="center">
 				<a href="${path}/user/join.dev">회원가입</a>&nbsp;|&nbsp;
-				<a href="#" data-toggle="modal" data-target="#findId">아이디 찾기</a>&nbsp;|&nbsp;
-				<a href="#" data-toggle="modal" data-target="#findPw">비밀번호 찾기</a>
+				<a href="#" data-toggle="modal" data-target="#findIdModal">아이디 찾기</a>&nbsp;|&nbsp;
+				<a href="#" data-toggle="modal" data-target="#findPwModal">비밀번호 찾기</a>
 			</div>
 		</div>
 		
-			<div class="modal fade" id="findId" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal fade" id="findIdModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			  <div class="modal-dialog modal-dialog-centered">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <h4 class="modal-title" id="exampleModalLabel">아이디 찾기</h4>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
-			        </button>
+			        </button> -->
 			      </div>
-			      <div class="modal-body" id="find-id-modal-body">
-			        	<font class="modalfont">이름</font> <input type="text" id="name" class="modalinput"><br><br>
-			        	<font class="modalfont">이메일</font> <input type="text" id="email" class="modalinput">
-			        	<div id="find-id"></div>
+			      <div class="modal-body" id="findid-modalbody">
+			        	<font class="modalfont">이름</font> <input type="text" id="findid-name" class="modalinput"><br><br>
+			        	<font class="modalfont">이메일</font> <input type="text" id="findid-email" class="modalinput">
+			        	<div class="find-result"></div>
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-close">닫기</button>
+			        <button type="button" class="btn btn-secondary modal-close" data-dismiss="modal">닫기</button>
 			        <button type="button" class="btn btn-primary" id="findID">아이디 찾기</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
+			<div class="modal fade" id="findPwModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog modal-dialog-centered">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h4 class="modal-title" id="exampleModalLabel">비밀번호 찾기</h4>
+			        <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button> -->
+			      </div>
+			      <div class="modal-body" id="findpw-modalbody">
+			      		<font class="modalfont">아이디</font> <input type="text" id="findpw-id" class="modalinput"><br><br>
+			        	<font class="modalfont">이름</font> <input type="text" id="findpw-name" class="modalinput"><br><br>
+			        	<font class="modalfont">이메일</font> <input type="text" id="findpw-email" class="modalinput">
+			        	<div class="find-result"></div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary modal-close" data-dismiss="modal">닫기</button>
+			        <button type="button" class="btn btn-primary" id="findPW">비밀번호 찾기</button>
 			      </div>
 			    </div>
 			  </div>

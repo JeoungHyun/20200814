@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import logic.DevService;
+import logic.Report;
 import logic.User;
 
 @Controller
@@ -22,8 +23,10 @@ public class AdminController {
 	@GetMapping("adminpage")
 	public ModelAndView list(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
+		List<Report> reports = service.getReports();
 		List<User> list = service.getUserList();
 		mav.addObject("list", list);
+		mav.addObject("reports", reports);
 		return mav;
 	}
 }

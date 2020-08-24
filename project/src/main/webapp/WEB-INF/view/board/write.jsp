@@ -35,16 +35,36 @@
 </head>
 <body>
 
-<br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
 <form:form modelAttribute="board" action="write.dev"
 	enctype="multipart/form-data" name="f">
 
-	<table id="customers"><tr><td align="center">글쓴이</td><td><form:input path="name"  value="${loginUser.name}" size="40%" readonly="true" />
+	<table id="customers">
+	<c:if test="${no==4 }">
+	<tr><td colspan="2" align="center" style="padding: 1px;"><h4 style="font-size: 15px">QnA게시판</h4></td></tr>
+	</c:if>
+		<c:if test="${no==5 }">
+	<tr><td colspan="2" align="center" style="padding: 1px;"><h4 style="font-size: 15px">자유 게시판</h4></td></tr>
+	</c:if>
+		<c:if test="${no==10 }">
+	<tr><td colspan="2" align="center" style="padding: 1px;"><h4 style="font-size: 15px">건의 게시판</h4></td></tr>
+	</c:if>
+		<c:if test="${no>=100 }">
+	<tr><td colspan="2" align="center" style="padding: 1px;"><h4 style="font-size: 15px">그룹 공지사항</h4></td></tr>
+	</c:if>
+	
+	<tr><td align="center">글쓴이</td><td><form:input path="name"  value="${loginUser.name}" size="40%" readonly="true" />
 	</td></tr>
 
 	<tr><td align="center">제목</td><td><form:input path="title" size="100%;" />
 	</td></tr>
-	<tr><td>사용될 기술</td><td><input type="text" /></td></tr>
+	<c:if test="${no ==4 }">
+	<tr>
+	
+	<td>사용될 기술</td>
+	
+	<td><input type="text" /></td></tr>
+	</c:if>
 	<tr><td align="center">내용</td><td>
 	<form:textarea path="content" rows="15" cols="80"/>
 	<script>CKEDITOR.replace("content",{

@@ -51,4 +51,19 @@ public class UserDao {
 		param.put("email", email);
 		return template.getMapper(UserMapper.class).findId(param);
 	}
+	
+	public String findPw(String id, String name, String email) {
+		param.clear();
+		param.put("id", id);
+		param.put("name", name);
+		param.put("email", email);
+		return template.getMapper(UserMapper.class).findPw(param);
+	}
+
+	public void changepw(String id, String newpw) {
+		param.clear();
+		param.put("id", id);
+		param.put("newpw", newpw);
+		template.getMapper(UserMapper.class).changepw(param);
+	}
 }

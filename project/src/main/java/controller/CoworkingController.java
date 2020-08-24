@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import logic.Coworking;
 import logic.DevService;
 import logic.Hashtag;
+import logic.User;
 
 @Controller // controller 역할을 수행하는 @Component 객체이다.
 @RequestMapping("coworking") // path에 cart으로 들어오는 요청을 처리해준다. (/cart/)
@@ -36,7 +37,7 @@ public class CoworkingController {
 	@GetMapping("main")
 	public ModelAndView main() {
 		ModelAndView mav = new ModelAndView();
-		List <Coworking> list = service.getWorkinglist(null, null);
+		List <Coworking> list = service.getWorkinglist(null, null, "regdate", 0, 0, 12);
 		List <Hashtag> hash = service.getHashtaglist();
 		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
 		for (int i = 0; i < list.size(); i++) {
@@ -66,7 +67,6 @@ public class CoworkingController {
 		ModelAndView mav = new ModelAndView();
 		try {
 			Coworking cwk = service.getdetails(gno);
-			System.out.println(cwk);
 			mav.addObject("cwk",cwk);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -74,18 +74,36 @@ public class CoworkingController {
 		return mav;
 	}
 	
+	@PostMapping("details")
+	public ModelAndView join(int gno, String name,String lang, String comment) {
+		ModelAndView mav = new ModelAndView();
+		try {			
+			service.ugroupJoin(gno,name,lang,comment);
+			mav.setViewName("redirect:main.dev");
+		} catch (DataIntegrityViolationException e) {
+			e.printStackTrace();
+		}
+		return mav;
+	}
+	
 	@PostMapping("register")
-	public ModelAndView add(@Valid Coworking coworking, BindingResult bresult) {
+	public ModelAndView add(@Valid Coworking coworking, BindingResult bresult, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		if (bresult.hasErrors()) {
 			bresult.reject("error.input.user");
 			mav.getModel().putAll(bresult.getModel());
 			return mav;
 		}
+		System.out.println(coworking);
 		try {
 			int cono = service.getmaxcono() +1;
+			//로그인정보 수정
+			User loginUser = (User) session.getAttribute("loginUser");
+			String name = loginUser.getName();
 			coworking.setGno(cono);
+			coworking.setName(name);
 			service.coworkingInsert(coworking);
+			service.ugroupJoinMaster(cono,name);
 			mav.setViewName("redirect:main.dev");
 		} catch (DataIntegrityViolationException e) {
 			e.printStackTrace();

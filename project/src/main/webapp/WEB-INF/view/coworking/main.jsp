@@ -20,7 +20,7 @@
 	width: 250px;
 	height: 250px;
 	overflow: hidden;
-	box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+	box-shadow: 0 5px 10px rgba(0, 0, 0, .1);
 	font-family: 'Roboto Condensed', sans-serif !important;
 }
 
@@ -112,7 +112,7 @@
 	height: 70px;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: flex-start;
 }
 
 .card:hover .news-content .hashlist {
@@ -150,14 +150,18 @@
 }
 
 .container .searchArea {
-	width: 1300px;
+	width: 100%;
+	margin-top: 10%;
 	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 0 15%;
 }
 
 .container .searchArea .filter {
 	float: left;
-	padding: 40px 50px 0 50px;
-	font-size: 20px;
+	padding: 0;
+	font-size: 18px;
 	font-weight: bold;
 }
 
@@ -168,25 +172,28 @@
 
 .container .searchArea .plus {
 	float: right;
-	padding: 40px 50px 0;
+	padding: 0;
 }
 
 .container .searchArea .plus .box {
-	box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
 	border: 2px solid lightblue;
 	background: #CCE1FF;
 	border-radius: 5px;
 	padding: 3px 5px;
 }
+
 .container .searchbox {
-	padding: 40px 50px 0;
+	padding: 0;
 }
+
 .container .searchbox input {
 	position: relative;
 	display: inline-block;
 	font-size: 20px;
 	box-sizing: border-box;
 }
+
 .container .searchbox input[type="text"] {
 	background: #fff;
 	width: 220px;
@@ -197,6 +204,7 @@
 	border-radius: 20px 0 0 20px;
 	font-family: Poppins;
 }
+
 .container .searchbox select {
 	position: relative;
 	left: -7px;
@@ -208,21 +216,103 @@
 	padding: 0 10px;
 	height: 31px;
 }
+
 .container .searchbox button {
 	position: relative;
 	left: -5px;
 	width: 90px;
-	height: 31px;
-	border: none;
 	outline: none;
 	cursor: pointer;
-	background: #ff4282;
+	background: #FF5757;
 	color: #fff;
-	top: 0;
+	top: -2px;
 	font-size: 20px;
+	border-radius: 10px;
+	border: 2px solid pink;
+	line-height: 30px;
 }
+
 .container .searchbox button:hover {
 	background: #ef296c;
+}
+
+.container .buttonbox {
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+
+.checkbox-btn {
+	position: absolute;
+	transform: translate(-50%, -50%);
+	width: 100px;
+	height: 30px;
+}
+
+.checkbox-btn input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: block;
+	cursor: pointer;
+	opacity: 0;
+	z-index: 1;
+}
+
+.checkbox-btn div {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	border: 2px solid #000;
+	border-radius: 4px;
+	/* box-shadow: 0 10px 20px rgba(0,0,0,0.5); */
+	overflow: hidden;
+}
+
+.checkbox-btn div .slide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 10px;
+	height: 30px;
+	background: #000;
+	transition: 0.5s;
+}
+
+.checkbox-btn input:checked+div .slide {
+	transform: translateX(90px);
+}
+
+.checkbox-btn .slide:before {
+	content: '마감순';
+	position: absolute;
+	top: -3px;
+	left: -90px;
+	text-align: center;
+	width: 90px;
+	height: 100%;
+	background: #00da00;
+	line-height: 30px;
+	font-weight: bold;
+	color: #fff;
+}
+
+.checkbox-btn .slide:after {
+	content: '최신순';
+	position: absolute;
+	top: -3px;
+	right: -90px;
+	text-align: center;
+	width: 90px;
+	height: 100%;
+	background: #A49CD9;
+	line-height: 30px;
+	font-weight: bold;
+	color: #fff;
 }
 </style>
 </head>
@@ -233,13 +323,21 @@
 				<span><a href="#">전체</a>&nbsp;/</span> <span><a href="#">스터디</a>&nbsp;/</span>
 				<span><a href="#">프로젝트</a>&nbsp;/</span> <span><a href="#">공모전</a></span>
 			</div>
-			<div></div>
-			
+			<div class="buttonbox">
+				<div class="checkbox-btn">
+					<input type="checkbox" name="">
+					<div>
+						<span class="slide"></span>
+					</div>
+				</div>
+			</div>
 			<div class="searchbox">
-						<input type="text" placeholder="Type...." id="searchinput"> <select id="searchtype">
-							<option value="title">제목</option>
-							<option value="hash">해시태그</option>
-						</select> <button type="button" id="search">Search</button>
+				<input type="text" placeholder="Type...." id="searchinput">
+				<select id="searchtype">
+					<option value="title">제목</option>
+					<option value="hashname">해시태그</option>
+				</select>
+				<button type="button" id="search">Search</button>
 			</div>
 			<div class="plus">
 				<div class="box">
@@ -274,7 +372,7 @@
 										</h2>
 										<div class="hashlist">
 											<c:forEach var="hash" items="${data.hashlist }">
-												<a><span>#${hash }</span></a>
+												<a><span>#${hash }</span></a>&nbsp;
 											</c:forEach>
 										</div>
 									</div>
@@ -286,54 +384,112 @@
 			</c:forEach>
 		</div>
 	</div>
-	
+
 	<script type="text/javascript">
 		$(function() {
+			var category = 0;
+			var num = 12;
+			
+			$(window).scroll(function () {
+				var scrollHeight = $(window).scrollTop() + $(window).height(); 
+				var documentHeight = $(document).height();
+				if(scrollHeight == documentHeight) {
+					console.log("SCROLL");
+					datasearch(input, type, sort, category, num, 8);
+					num += 8;
+				}
+			})
+			
+			$(".container .searchArea .filter span a").on("click", function () {
+				category = $(this).parent().index();
+				console.log($(this).parent().index());
+				num = 12;
+				datasearch(input, type, sort, category, 0, 12);
+			})
+			
+			var button = false;
+			var sort = "regdate";
+			var input = $("#searchinput").val();
+			var type = $("#searchtype").val();
+			$(".checkbox-btn input").on("click", function() {
+				num = 12;
+				button = !button;
+				if(button) {
+					sort = "deadline";
+				}else {
+					sort = "regdate";
+				}
+				datasearch(input, type, sort, category, 0, 12);
+			})
+			
+			
+			
 			var content = $(".content");
 			$("#search").on("click", function() {
 				console.log($("#searchinput").val());
 				console.log($("#searchtype").val());
+				input = $("#searchinput").val();
+				type = $("#searchtype").val();
+				num = 12;
+				datasearch(input, type, sort, category, 0, 12);
+			})
+
+			function datasearch(a, b, c, d, e, f) {
 				var data = {
-						searchinput : $("#searchinput").val(),
-						searchtype : $("#searchtype").val()
+					searchinput : a,
+					searchtype : b,
+					searchsort : c,
+					category: d,
+					num: e,
+					limit: f
 				}
 				$.ajax({
-					url: '${path}/ajax/searchworking.dev',
-					type: "post",
-					data: data,
-					success: function(response){
+					url : '${path}/ajax/searchworking.dev',
+					type : "post",
+					data : data,
+					success : function(response) {
 						var res = JSON.parse(response);
 						viewContent(res);
 					}
 				})
-			})
-			
-			function viewContent(data) {
-				content.html("");
-				var data_card = "";
-				$.each(data, function (i, v) {
-					console.log(v);
-					 data_card += '<div class="container-fluid"><div class="container"><div class="row"><div class="col-sm-4">'
-					data_card += '<div class="card"><div class="post-image"><img src="${path}/img/raspberry.jpg" class="img-responsive">'
-					data_card += '</div><div class="news-content"><span class="category">'
-					data_card += v.category == "스터디"? "Study": v.category == "프로젝트"? "Project" : "Contest"
-					data_card += '</span><div class="post-meta"><span class="author"> <a href="#"> <iclass="fa fa-user"></i>'
-					data_card += v.name
-					data_card += '</a></span> <span class="time"> <i class="fa fa-clock-o"></i> '
-					data_card += v.deadline
-					data_card += '</span><div class="clearfix"></div></div><h2 class="post-header"><a href="${path}/coworking/details.dev?gno='
-					data_card += v.gno
-					data_card += '">'+v.title
-					data_card += '</a></h2><div class="hashlist">'
-					for (var i = 0; i < v.hashlist.length; i++) {
-						data_card += '<a><span>#'+ v.hashlist[i]+'&nbsp;</span></a>'
-					}
-					data_card += '</div></div></div></div></div></div></div>'
-					console.log(data_card);
-					content.append(data_card); 
-					data_card = ""
-				})
 			}
+
+			function viewContent(data) {
+				if(num == 12) content.html("");
+				var data_card = "";
+				$.each(data,function(i, v) {
+									console.log(v);
+									data_card += '<div class="container-fluid"><div class="container"><div class="row"><div class="col-sm-4">'
+									data_card += '<div class="card"><div class="post-image"><img src="${path}/img/raspberry.jpg" class="img-responsive">'
+									data_card += '</div><div class="news-content"><span class="category">'
+									data_card += v.category == "스터디" ? "Study"
+											: v.category == "프로젝트" ? "Project"
+													: "Contest"
+									data_card += '</span><div class="post-meta"><span class="author"> <a href="#"> <i class="fa fa-user"></i> '
+									data_card += v.name
+									data_card += '</a></span> <span class="time"> <i class="fa fa-clock-o"></i> '
+									data_card += v.deadline
+									data_card += '</span><div class="clearfix"></div></div><h2 class="post-header"><a href="${path}/coworking/details.dev?gno='
+									data_card += v.gno
+									data_card += '">' + v.title
+									data_card += '</a></h2><div class="hashlist">'
+									for (var i = 0; i < v.hashlist.length; i++) {
+										data_card += '<a><span>#'
+												+ v.hashlist[i] + '</span></a>&nbsp;'
+									}
+									data_card += '</div></div></div></div></div></div></div>'
+									content.append(data_card);
+									data_card = ""
+								})
+			}
+
+			$(document).on("click", ".hashlist a", function() {
+				console.log($(this).children().text().substring(1));
+				num = 12;
+				datasearch($(this).children().text().substring(1), "hashname", sort, category, 0, 12);
+				type = "hashname";
+				input = $(this).children().text().substring(1);
+			})
 		})
 	</script>
 </body>

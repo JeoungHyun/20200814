@@ -4,21 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.sql.DataSource;
-
-import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import dao.mapper.BoardMapper;
 import logic.Board;
-import logic.goodorbad;
+import logic.Goodorbad;
 
 @Repository
 public class BoardDao {	
@@ -63,9 +55,20 @@ public class BoardDao {
 		param.put("limit", limit);
 		param.put("no",no);
 		System.out.println(param);
-
 		return template.getMapper(BoardMapper.class).list(param);
 	}
+	
+	public List<Board> list2(int no, int limit) {
+		param.clear();
+
+		param.put("limit", limit);
+		param.put("no",no);
+		System.out.println(param);
+		return template.getMapper(BoardMapper.class).list2(param);
+	}
+	
+	
+	
 
 	public Board detail(int no, int bno) {
 		param.clear();
@@ -100,7 +103,7 @@ public class BoardDao {
 		param.put("gno", gno);
 		param.put("name", name);
 		template.getMapper(BoardMapper.class).likeit(param);
-		
+
 	}
 
 	public int maxgno(Integer no, Integer bno) {
@@ -115,11 +118,11 @@ public class BoardDao {
 		param.put("no", no);
 		param.put("bno", bno);
 		param.put("name", name);
-		
+
 		return template.getMapper(BoardMapper.class).likechk(param);
 	}
 
-	public List<goodorbad> goodorbadlist(Integer no,Integer pageNum, int limit) {
+	public List<Goodorbad> goodorbadlist(Integer no,Integer pageNum, int limit) {
 		param.clear();
 		param.put("startrow", (pageNum - 1) * limit);
 		param.put("limit", limit);

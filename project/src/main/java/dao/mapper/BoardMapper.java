@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import logic.Board;
-import logic.goodorbad;
+import logic.Goodorbad;
 
 public interface BoardMapper {
 
@@ -93,11 +93,15 @@ public interface BoardMapper {
 	         + " from goodorbad "
 	         +" where no = #{no} order by bno desc limit #{startrow} , #{limit} "
 			+ "</script>"})
-	List<goodorbad> goodorbadlist(Map<String, Object> param);
+	List<Goodorbad> goodorbadlist(Map<String, Object> param);
 
 	
 	@Select("SELECT IFNULL(COUNT(*),0) FROM goodorbad WHERE NO=#{no} AND wno=#{bno}")
 	int getpoint(Map<String, Object> param);
+
+	
+	@Select("SELECT * from board where no= #{no} order by bno desc limit 0 , #{limit} ")
+	List<Board> list2(Map<String, Object> param);
 
 	
 
