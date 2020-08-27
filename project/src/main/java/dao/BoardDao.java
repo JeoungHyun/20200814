@@ -57,7 +57,7 @@ public class BoardDao {
 		System.out.println(param);
 		return template.getMapper(BoardMapper.class).list(param);
 	}
-	
+
 	public List<Board> list2(int no, int limit) {
 		param.clear();
 
@@ -67,9 +67,6 @@ public class BoardDao {
 		return template.getMapper(BoardMapper.class).list2(param);
 	}
 	
-	
-	
-
 	public Board detail(int no, int bno) {
 		param.clear();
 		param.put("no", no);
@@ -137,7 +134,13 @@ public class BoardDao {
 		return template.getMapper(BoardMapper.class).getpoint(param);
 	}
 
-
+	public List<Board> getCommunitylist(int no, int num, int limit) {
+		param.clear();
+		param.put("no", no);
+		param.put("num", num);
+		param.put("limit", limit);
+		return template.getMapper(BoardMapper.class).getCommunitylist(param);
+	}
 
 
 

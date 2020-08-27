@@ -90,7 +90,7 @@ var activeInactiveWeekends = true;
 	    center: 'prev, title, next',
 	    right: 'month'
 	  },
-	  contentHeight:700,
+	  contentHeight:400,
 	  views: {
 	    month: {
 	      columnFormat: 'dddd'
@@ -103,7 +103,7 @@ var activeInactiveWeekends = true;
 	  events: function (start, end, timezone, callback) {
 		  var pno = {pno : $("#pno").val()};
 		  console.log(pno);
-	    $.ajax({
+	    /*$.ajax({
 	      type: "post",
 	      url: "/scrum/ajax/getschedule.do",
 	      data: pno,
@@ -121,7 +121,7 @@ var activeInactiveWeekends = true;
 	        })
 	        callback(fixedDate);
 	      }
-	    });
+	    });*/
 	  },
 
 	  eventAfterAllRender: function (view) {
@@ -161,7 +161,7 @@ var activeInactiveWeekends = true;
 	  // 일정 드래그앤드롭
 	  eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
 		  console.log($("#auth").val());
-		  if($("#auth").val() == 'Master'){
+		 /* if($("#auth").val() == 'Master'){*/
 	    $('.popover.fade.top').remove();
 
 	    // 주,일 view일때 종일 <-> 시간 변경불가
@@ -191,16 +191,16 @@ var activeInactiveWeekends = true;
 	        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
 	      }
 	    });
-	    }else{
+	   /* }else{
 	    	alert("해당 권한이 없습니다.");
-	    }
+	    }*/
 	  },
 
 	  select: function (startDate, endDate, jsEvent, view) {
 
 	    $(".fc-body").unbind('click');
 	    $(".fc-body").on('click', 'td', function (e) {
-	    	if($("#auth").val() == 'Master'){
+	    	/*if($("#auth").val() == 'Master'){*/ // 클릭 이벤트
 	      $("#contextMenu")
 	        .addClass("contextOpened")
 	        .css({
@@ -208,7 +208,7 @@ var activeInactiveWeekends = true;
 	          left: e.pageX,
 	          top: e.pageY
 	        });
-	    	}
+	    	/*}*/
 	      return false;
 	    });
 

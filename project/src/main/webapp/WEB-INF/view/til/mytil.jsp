@@ -124,7 +124,7 @@ section {
 									<span class="category">TIL</span>
 									<div class="post-meta">
 									<h2 class="post-header">
-									<a href="detail.dev?no=3,bno=${til.bno}">${til.title}</a></h2>
+									<a href="info.dev?bno=${til.bno}&no=${til.no}">${til.title}</a></h2>
 										 <span class="time"> 
 										<a href="#"> 
 										<i class="fa fa-clock-o"></i> 

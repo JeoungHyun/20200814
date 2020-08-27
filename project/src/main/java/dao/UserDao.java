@@ -66,4 +66,8 @@ public class UserDao {
 		param.put("newpw", newpw);
 		template.getMapper(UserMapper.class).changepw(param);
 	}
+	
+	public void giturlUpdate(User dbUser) {
+		template.getMapper(UserMapper.class).giturlUpdate(dbUser);
+	}
 }

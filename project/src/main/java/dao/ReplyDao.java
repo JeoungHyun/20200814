@@ -39,4 +39,11 @@ public class ReplyDao {
 	}
 
 
+
+	public void replyDelete(Reply reply) {
+		template.getMapper(ReplyMapper.class).replyDelete(reply);
+		
+	}
+
+
 }

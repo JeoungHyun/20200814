@@ -57,8 +57,10 @@ public class CoworkingController {
 	}
 	
 	@GetMapping("register")
-	public String form(Model model) {
-		model.addAttribute(new Coworking());
+	public String loginCheckform(Model model, HttpSession session) {
+		Coworking coworking = new Coworking();
+		coworking.setName(((User)session.getAttribute("loginUser")).getName());
+		model.addAttribute(coworking);
 		return null;
 	}
 	

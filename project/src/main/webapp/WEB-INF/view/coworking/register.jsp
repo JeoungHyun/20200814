@@ -592,7 +592,6 @@ document.addEventListener('click', (e) => {
   }
 })
 
-input.focus();
 
 $("#submit").on("click", function () {
 	var hash = {hash : tags};
@@ -633,6 +632,8 @@ $("#submit").on("click", function () {
 			$(this).children(".selected-date").text(formatDate(date));
 			$(this).children(".selected-date").data("value",selectedDate);
 			populateDates($(this).children(".dates").children(".days"));
+			$(this).parent().children("input").val(formatDate(date));
+			console.log($(this).parent());
 		})
 		
 		
@@ -645,7 +646,8 @@ $("#submit").on("click", function () {
 			
 			$(this).parent().parent().parent().children(".selected-date").text(formatDate(selectedDate));
 			$(this).parent().parent().parent().children(".selected-date").data("value",selectedDate);
-
+			$(this).parent().parent().parent().parent().children("input").val(formatDate(selectedDate));
+			console.log($(this).parent().parent().parent().parent().children("input").val());
 			populateDates($(this).parent());
 			/* $(this).parent().parent().toggleClass("active"); */
 		})

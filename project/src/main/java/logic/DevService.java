@@ -17,16 +17,18 @@ import dao.MessageDao;
 import dao.ProjectDao;
 import dao.ReplyDao;
 import dao.ReportDao;
+import dao.SubcribeDao;
 import dao.TilDao;
 import dao.UserDao;
 import dao.UserGroupDao;
-import dao.fileDao;
+import dao.FileDao;
+import dao.GoodorbadDao;
 
 @Service
 public class DevService {
 
 	@Autowired
-	private fileDao filedao;
+	private FileDao filedao;
 
 	@Autowired
 	private UserDao userDao;
@@ -54,6 +56,12 @@ public class DevService {
 	
 	@Autowired
 	private ProjectDao projectDao;
+	
+	@Autowired
+	private SubcribeDao subcribeDao;
+	
+	@Autowired
+	private GoodorbadDao goodorbadDao;
 	
 	private Map<String, Object> map = new HashMap<>();
 
@@ -119,10 +127,6 @@ public class DevService {
 
 	public List<Board> boardlist(int no, Integer pageNum, int limit, String searchtype, String searchcontent) {
 		return boardDao.list(no, pageNum, limit, searchtype, searchcontent);
-	}
-	
-	public List<Board> boardlist2(int no,  int limit) {
-		return boardDao.list2(no,  limit );
 	}
 
 	public void boardWrite(Board board, HttpServletRequest request) {
@@ -346,6 +350,85 @@ public class DevService {
 	public int getpoint(Integer no, Integer bno) {
 		return boardDao.getpoint(no,bno);
 	}
+	
+	public void subinsert(Subscribe sub) {
+		subcribeDao.insert(sub);
+		
+	}
+
+	public void subdelete(Subscribe sub) {
+		subcribeDao.delete(sub);
+		
+	}
+
+	public Subscribe getSubscribe(String scrapper, String scrapped) {
+		return subcribeDao.getSubscribe(scrapper, scrapped);
+	}
+
+	public List<TIL> mytillist(String name) {
+		return tilDao.mytillist(name);
+	}
+
+	public List<Board> getCommunitylist(int no, int num, int limit) {
+		return boardDao.getCommunitylist(no, num, limit);
+	}
+	
+	public int getMaxProno(String name) {
+		return projectDao.getMaxProno(name);
+	}
+
+	public void addProject(Project newproject) {
+		projectDao.addProject(newproject);
+	}
+
+	public List<Project> getProjects(String name) {
+		return projectDao.getProjects(name);
+	}
+
+	public void updateProjectAble(String username, int prono) {
+		projectDao.updateProjectAble(username, prono);
+	}
+
+	public void clearProjectable(String name) {
+		projectDao.clearProjectable(name);
+	}
+
+	public void giturlUpdate(User dbUser) {
+		userDao.giturlUpdate(dbUser);
+	}
+	
+	public List<Subscribe> getsubuser() {
+		return subcribeDao.getsubuser();
+	}
 
 
+	public void likeinsert(Goodorbad gob) {
+		goodorbadDao.insert(gob);
+
+	}
+
+	public int getmaxgno(int no, int wno) {
+		return goodorbadDao.getmaxgno(no,wno);
+	}
+
+	public void likedelete(int no, int wno, String name) {
+		goodorbadDao.likedelete(no,wno, name);
+	}
+	
+	public Goodorbad getPoint(Integer no, int wno, String name) {
+		return goodorbadDao.getlike(no, wno, name);
+	}
+
+	public int getcount(Integer no, Integer bno) {
+		return tilDao.getcount(no,bno);
+	}
+
+	public List<Board> boardlist2(int no,  int limit) {
+		return boardDao.list2(no,  limit );
+	}
+
+	public void replyDelete(Reply reply) {
+		replyDao.replyDelete(reply);
+		
+	}
 }

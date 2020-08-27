@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
+import logic.Project;
 import logic.Tag;
 
 public interface ProjectMapper {
@@ -25,4 +27,19 @@ public interface ProjectMapper {
 
 	@Select("Select * from tag where wno=#{userno}")
 	List<Tag> getTags(Map<String, Object> param);
+
+	@Select("Select ifnull(max(prono),0) from project where name=#{name}")
+	int getMaxProno(Map<String, Object> param);
+
+	@Insert("Insert into project (name, prono, subject, num, description, repository, able, start, end) values (#{name}, #{prono}, #{subject}, #{num}, #{description}, #{repository}, #{able}, #{start}, #{end})")
+	void addProject(Project newproject);
+
+	@Select("Select * from project where name=#{name}")
+	List<Project> getProjects(Map<String, Object> param);
+
+	@Update("Update project set able=true where name=#{name} and prono=#{prono}")
+	void updateProjectAble(Map<String, Object> param);
+
+	@Update("Update project set able=false where name=#{name}")
+	void clearProjectable(Map<String, Object> param);
 }

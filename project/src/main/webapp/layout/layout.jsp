@@ -48,7 +48,11 @@
 		</nav>
 		<nav class="nav2">
 			<ul class="nav-menu">
-				<li class="menu-li"><a href="${path}/til/main.dev">TIL</a></li>
+				<li class="menu-li"><a href="${path}/til/main.dev">TIL</a>
+				<ul>
+						<li><a href="${path}/til/main.dev?no=3">TIL 페이지 목록</a></li>
+						<li><a href="${path}/til/subuser.dev">구독한 사용자 목록</a></li>
+				</ul></li>
 				<li class="sub-menu menu-li"><a href="#">Community</a>
 					<ul>
 						<li><a href="${path}/board/list.dev?no=4">Q&A게시판</a></li>

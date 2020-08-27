@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
- 
+
 <script>
 var bno = '${board.bno}'; //게시글 번호
 var no='${board.no}'
-
+var login = '${loginUser.name}';
 	
 
 $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭시 
@@ -26,9 +26,12 @@ function commentList(){
             $.each(data, function(key, value){ 
                 a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-left: 400px; margin-right: 400px;">';
                 a += '<div class="commentInfo'+value.rno+'">'+'작성자 :  '+value.name; 
+                if (login == value.name) {
                 a += '<a onclick="commentUpdate('+value.rno+',\''+value.content+'\');"> 수정 </a>';
-                a += '<a onclick="commentDelete('+value.rno+');"> 삭제 </a> </div>';
+                a += '<a onclick="commentDelete('+value.rno+','+value.no+','+value.bno+');"> 삭제 </a> </div>';
+                }
                 a += '<div class="commentContent'+value.rno+'"> <p> 내용 : '+value.content +'</p>';
+                
                 a += '</div></div>';
             });
             
@@ -65,7 +68,8 @@ function commentUpdate(cno, content){
     var a ='';
     
     a += '<div class="input-group">';
-    a += '<input type="text" class="form-control" name="content_'+cno+'" value="'+content+'"/>';
+	a += '<textarea rows="5" cols="140" class="form-control" name="content_'+cno+'" value="'+content+'">'+content+'</textarea>';
+//     a += '<input type="text" class="form-control" name="content_'+cno+'" value="'+content+'"/>';
     a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+cno+');">수정</button> </span>';
     a += '</div>';
     
@@ -88,12 +92,19 @@ function commentUpdateProc(cno){
 }
  
 //댓글 삭제 
-function commentDelete(cno){
+function commentDelete(rno,no,bno){
     $.ajax({
-        url : '/comment/delete/'+cno,
+        url : '${path}/ajax/commentdelete.dev',
         type : 'post',
+        data : {
+        	'rno' :rno,
+        	'no':no,
+        	'bno':bno
+        },
         success : function(data){
-            if(data == 1) commentList(bno); //댓글 삭제후 목록 출력 
+        	
+             commentList(bno); //댓글 삭제후 목록 출력 
+             alert("댓글이 삭제되었습니다.")
         }
     });
 }

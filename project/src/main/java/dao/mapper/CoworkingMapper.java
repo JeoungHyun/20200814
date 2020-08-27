@@ -50,4 +50,6 @@ public interface CoworkingMapper {
 			"where user_group.name = #{name} and chk = '승인'")
 	List<Coworking> getUsergroup(Map<String, Object> param);
 
+	@Select("SELECT title FROM working WHERE gno = ${gno}")
+	String grouptitle(Map<String, Object> param);
 }

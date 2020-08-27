@@ -39,4 +39,7 @@ public interface UserMapper {
 
 	@Update("update user set pw=#{newpw} where id=#{id}")
 	void changepw(Map<String, Object> param);
+	
+	@Update("update user set giturl=#{giturl}, giturlable=#{giturlable} where name=#{name}")
+	void giturlUpdate(User dbUser);
 }

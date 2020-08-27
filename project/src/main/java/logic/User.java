@@ -22,7 +22,13 @@ public class User {
 	private String phone;
 	private Date regdate;
 	private String auth;
-	
+	private int alertnum;
+	private String giturl;
+	private boolean giturlable;
+	private String tilurl;
+	private boolean tilurlable;
+	private String content;
+	private boolean open;
 	public int getUno() {
 		return uno;
 	}
@@ -71,9 +77,53 @@ public class User {
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
+	public int getAlertnum() {
+		return alertnum;
+	}
+	public void setAlertnum(int alertnum) {
+		this.alertnum = alertnum;
+	}
+	public String getGiturl() {
+		return giturl;
+	}
+	public void setGiturl(String giturl) {
+		this.giturl = giturl;
+	}
+	public boolean isGiturlable() {
+		return giturlable;
+	}
+	public void setGiturlable(boolean giturlable) {
+		this.giturlable = giturlable;
+	}
+	public String getTilurl() {
+		return tilurl;
+	}
+	public void setTilurl(String tilurl) {
+		this.tilurl = tilurl;
+	}
+	public boolean isTilurlable() {
+		return tilurlable;
+	}
+	public void setTilurlable(boolean tilurlable) {
+		this.tilurlable = tilurlable;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public boolean isOpen() {
+		return open;
+	}
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
 	@Override
 	public String toString() {
 		return "User [uno=" + uno + ", name=" + name + ", id=" + id + ", pw=" + pw + ", email=" + email + ", phone="
-				+ phone + ", regdate=" + regdate + ", auth=" + auth + "]";
+				+ phone + ", regdate=" + regdate + ", auth=" + auth + ", alertnum=" + alertnum + ", giturl=" + giturl
+				+ ", giturlable=" + giturlable + ", tilurl=" + tilurl + ", tilurlable=" + tilurlable + ", content="
+				+ content + ", open=" + open + "]";
 	}
 }

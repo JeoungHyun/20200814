@@ -60,4 +60,10 @@ public class CoworkingDao {
 		param.put("name",name);
 		return template.getMapper(CoworkingMapper.class).getUsergroup(param);
 	}
+	
+	public String grouptitle(int gno) {
+		param.clear();
+		param.put("gno",gno);
+		return template.getMapper(CoworkingMapper.class).grouptitle(param);
+	}
 }

@@ -99,16 +99,11 @@ public interface BoardMapper {
 	@Select("SELECT IFNULL(COUNT(*),0) FROM goodorbad WHERE NO=#{no} AND wno=#{bno}")
 	int getpoint(Map<String, Object> param);
 
-	
+	@Select("SELECT b.no NO, bno, NAME, title, content, regdate, IFNULL(tot,0) point FROM board b "
+			+ "LEFT JOIN (SELECT NO, wno, IFNULL(COUNT(wno),0) tot FROM goodorbad WHERE NO = no GROUP BY wno) g ON  g.no = b.no AND bno = wno "
+			+ "where b.no= #{no} order by point desc limit #{num} , #{limit}")
+	List<Board> getCommunitylist(Map<String, Object> param);
+
 	@Select("SELECT * from board where no= #{no} order by bno desc limit 0 , #{limit} ")
 	List<Board> list2(Map<String, Object> param);
-
-	
-
-	
-	
-
-
-	
-	
 }

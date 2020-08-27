@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import logic.DevService;
+import logic.Project;
 import logic.Tag;
 import logic.User;
 
@@ -35,6 +36,11 @@ public class PortfolioController {
 		ModelAndView mav = new ModelAndView();
 		int userno = ((User)session.getAttribute("loginUser")).getUno();
 		List<Tag> tags = service.getTags(userno);
+		
+		String name = ((User)session.getAttribute("loginUser")).getName();
+		List<Project> projects = service.getProjects(name);
+		
+		mav.addObject("projects",projects);
 		mav.addObject("tags",tags);
 		return mav;
 	}

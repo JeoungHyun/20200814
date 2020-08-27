@@ -19,7 +19,7 @@ public interface TilMapper {
 	@Select("select ifnull(max(bno),0) from board")
 	int maxnum();
 
-	@Select("select * from board  where no = 3 ORDER BY regdate desc")
+	@Select("select * from board  where no = 3 and open=0 ORDER BY regdate desc")
 	List<TIL> list(Map<String, Object> param);
 
 
@@ -32,5 +32,11 @@ public interface TilMapper {
 
 	@Update("update board set name= #{name}, title= #{title}, content= #{content}, open=#{open}   where no= #{no} and bno=#{bno}")
 	void update(TIL til);
+	
+	@Select("select * from board where no = 3 and name=#{name} ORDER BY regdate desc")
+	List<TIL> mytillist(Map<String, Object> param);
+	
+	@Select("SELECT IFNULL(COUNT(*),0) FROM goodorbad WHERE NO=#{no} AND wno=#{bno}")
+	int getcount(Map<String, Object> param);
 
 }

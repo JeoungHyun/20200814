@@ -2,6 +2,7 @@ package dao.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 
@@ -23,6 +24,10 @@ public interface ReplyMapper {
 
     @Select("select * from reply where no=#{no} and bno=${bno}")
 	public List<Reply> replyList(Reply reply);
+
+
+    @Delete("delete from reply where no=${no} and bno=${bno} and rno=${rno}")
+	public void replyDelete(Reply reply);
 
 
 

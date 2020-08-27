@@ -9,7 +9,7 @@ header {
 	position: absolute;
 	top: 0;
 	left: 0;
-	padding: 0 30px;
+	padding: 0 15%;
 	background: #fff;
 	width: 100%;
 	box-sizing: border-box;
@@ -17,11 +17,12 @@ header {
 
 header .logo {
 	color: #8572EE;
-	height: 50px;
-	line-height: 50px;
+	height: 80px;
+	line-height: 80px;
 	font-size: 24px;
 	float: left;
 	font-weight: bold;
+	width: 200px;
 }
 header .logo a{
 	color: #8572EE;
@@ -29,7 +30,7 @@ header .logo a{
 }
 header .logo a img{
 	position: absolute;
-	top: 10px;
+	top: 25px;
 }
 header .nav1 {
 	float: right;
@@ -66,7 +67,7 @@ header nav ul li.sub-menu:hover:before {
 
 header ul li ul {
 	position: absolute;
-	top: 50px;
+	top: 80px;
 	left: 0;
 	background: #fff;
 	display: block;
@@ -93,12 +94,14 @@ header ul li ul li {
 }
 
 header nav ul li a {
-	height: 50px;
-	line-height: 50px;
+	height: 80px;
+	line-height: 80px;
 	padding: 0 20px;
 	color: #8572EE;
 	text-decoration: none;
 	display: block;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 header nav ul li a:hover {
@@ -109,13 +112,15 @@ header nav ul li a:hover {
 header nav ul li ul li a {
 	height: 40px;
 	line-height: 40px;
+	font-weight: 500;
+	font-size: 15px;
 }
 
 .nav-menu {
 	margin: 0;
-	width: 50%;
+	width: 100%;
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 }
 
 .nav-menu .menu-li {
@@ -123,5 +128,5 @@ header nav ul li ul li a {
 }
 .main {
 	position: relative;
-	top: 50px;
+	top: 80px;
 }

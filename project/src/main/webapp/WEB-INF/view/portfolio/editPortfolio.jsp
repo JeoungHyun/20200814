@@ -35,7 +35,7 @@
 		color : #5A3FEE;
 	}
 	.content-name {
-		width : 150px;
+		width : 200px;
 		margin-right : 0;
 		font-weight : bold;
 		font-size : 25px;
@@ -44,6 +44,9 @@
 		margin-bottom : 20px;
 	}
 	.content-body-skills {
+		margin-bottom : 20px;
+	}
+	.content-body-giturl {
 		margin-bottom : 20px;
 	}
 	.content-body-container {
@@ -137,6 +140,22 @@
 	#gitrulinput {
 		width : 300px;
 	}
+	
+	
+	
+	
+	// 프로젝트 리스팅 임시
+	table {
+		border : 1px solid #000;
+	}
+	th {
+		border : 1px solid #000;
+	}
+	td {
+		border : 1px solid #000;
+	}
+	
+	
 </style>
 <script>
 	$(function() {
@@ -259,6 +278,13 @@
 		  }
 		})
 		$("#save").on("click", function () {
+			var projectable  = [];
+			$('.projectable').each(function(i){
+				if($(this).is(":checked")){
+					projectable.push($(this).data('prono'));
+				}
+		    });
+			console.log(typeof(projectable[1]))
 			$.ajax({
 				url: '${path}/ajax/portfolioSave.dev',
 				type: "post",
@@ -266,7 +292,8 @@
 					pTags : pTags,
 					sTags : sTags,
 					giturl : $('#gitrulinput').val(),
-					giturlable : $('#giturlable').prop('checked')
+					giturlable : $('#giturlable').prop('checked'),
+					projectablepronos : projectable
 				},
 				traditional: true,
 				success: function(s) {
@@ -330,18 +357,133 @@
 				
 				<div class="content-body-giturl">
 					<div class="content-name">Github</div>
-							<span class="custom-control custom-switch">
-							    <input type="checkbox" class="custom-control-input" id="giturlable">
-							    <label class="custom-control-label" for="giturlable"></label>
-							</span>
+					<span class="custom-control custom-switch">
+						<c:if test='${sessionScope.loginUser.giturlable==false}'>
+						    <input type="checkbox" class="custom-control-input" id="giturlable">
+						</c:if>
+						<c:if test='${sessionScope.loginUser.giturlable==true}'>
+						    <input type="checkbox" class="custom-control-input" id="giturlable" checked>
+						</c:if>
+					    <label class="custom-control-label" for="giturlable"></label>
+					</span>
+							
 					<span class="content-body-container">
 						<span class="giturl-input-span">
 							<input id="gitrulinput"/>
 						</span>
 					</span>
 				</div>
+				
+				<div class="content-body-project">
+					<div class="content-name">프로젝트 관리</div>
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addProject">프로젝트 추가</button>
+					<table class="projectlist">
+						<tr>
+							<th>프로젝트명</th>
+							<th>프로젝트 기간</th>
+							<th>프로젝트 인원</th>
+							<th>공개여부</th>
+							<th>삭제</th>
+						</tr>
+						<c:forEach var="projects" items="${projects}">
+							<tr>
+								<td>${projects.subject}</td>
+								
+								<td>
+									<fmt:formatDate value="${projects.start}" pattern="yyyy-MM-dd"/> 
+									- 
+									<fmt:formatDate value="${projects.end}" pattern="yyyy-MM-dd"/>
+								</td>
+								<td>${projects.num}</td>
+								<td><input type='checkbox' class="projectable" name="projectable" data-prono="${projects.prono}"></td>
+								<td><input type='checkbox'></td>
+							</tr>
+						</c:forEach>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
+	
+	
+	<div class="modal fade" id="addProject" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLongTitle">프로젝트 추가하기</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	      		<div class="form-group">
+					<label for="subject" class="col-form-label">프로젝트명 :</label>
+					<input type="text" class="form-control" id="subject">
+				</div>
+				<div class="form-group">
+					<label for="numbers" class="col-form-label">프로젝트 인원 :</label>
+					<input type="text" class="form-control" id="numbers">
+				</div>
+				<div class="form-group">
+					<label for="start" class="col-form-label">시작일 :</label>
+					<input type="text" class="form-control" id="start">
+				</div>
+				<div class="form-group">
+					<label for="end" class="col-form-label">종료일 :</label>
+					<input type="text" class="form-control" id="end">
+				</div>
+				<div class="form-group">
+					<label for="description" class="col-form-label">상세 업무 :</label>
+					<textarea class="form-control" id="description"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="repository" class="col-form-label">Github link:</label>
+					<input type="text" class="form-control" id="repository">
+				</div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+	        <button type="button" class="btn btn-primary" id="saveNewProject">저장하기</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<script>
+		$(function(){
+			$("#saveNewProject").on("click",function(){
+				$.ajax({
+					url : "${path}/ajax/addProject.dev",
+					type : "post",
+					data : {
+						name : "${sessionScope.loginUser.name}",
+						subject : $("#subject").val(),
+						numbers : $("#numbers").val(),
+						start : $("#start").val(),
+						end : $("#end").val(),
+						description : $('#description').val(),
+						repository : $('#repository').val()
+					},
+					success : function(s) {
+						var result = JSON.parse(s);
+						var html = '';
+						html += '<tr><td>' + result.subject + '</td>'
+						html += '<td>' + result.term + '</td>'
+						html += '<td>' + result.numbers + '</td>'
+						html += '<td><input type="checkbox" class="projectable" name="projectable" data-prono="' + result.prono + '"></td>'
+						html += '<td><input type="checkbox"></td></tr>'
+						alert("새로운 프로젝트가 추가되었습니다.")
+						$(".projectlist").append(html);
+						$(".form-control").val('');
+						$("#addProject").modal('hide');
+						
+					},
+					error : function(e) {
+						alert("에러 발생")
+					}
+				})
+			})
+		})
+	</script>
+	
 </body>
 </html>

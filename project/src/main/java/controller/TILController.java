@@ -17,7 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import exception.BoardException;
 
 import logic.DevService;
+import logic.Goodorbad;
+
+import logic.Subscribe;
 import logic.TIL;
+import logic.User;
 
 
 @Controller // controller
@@ -39,7 +43,6 @@ public class TILController {
 					"===============================================================================================");
 		}
 		System.out.println(til);
-		mav.addObject("no", no);
 		
 		mav.addObject("til", til);
 		return mav;
@@ -73,7 +76,8 @@ public class TILController {
 	@RequestMapping("mytil")
 	public ModelAndView mytillist(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		List<TIL> tillist = service.tillist();
+		String name = ((User)session.getAttribute("loginUser")).getName();
+		List<TIL> tillist = service.mytillist(name);
 		mav.addObject("tillist", tillist);
 
 		return mav;
@@ -120,5 +124,75 @@ public class TILController {
 		
 		return mav;
 	}
+	
+	@GetMapping("info")
+	public ModelAndView info(Integer no, Integer bno, HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		TIL til = null;
+		if (bno == null) { 
+			til = new TIL();
+		} else {
+
+			til = service.getTil(no, bno); // board:파라미터 bno에 해당하는 게시물 정보 저장
+			System.out.println(
+					"===============================================================================================");
+		}
+		User user = (User)session.getAttribute("loginUser");
+		if (user != null) {
+			String scrapped = til.getName();
+			String scrapper = ((User)session.getAttribute("loginUser")).getName();
+			Subscribe sub = new Subscribe();
+			sub = service.getSubscribe(scrapper, scrapped);
+			mav.addObject("sub",sub);
+			
+			
+			
+			
+			String name=((User)session.getAttribute("loginUser")).getName();
+			int wno=til.getBno();
+
+			Goodorbad gob= new Goodorbad();
+			gob = service.getPoint(no,wno,name); 
+			mav.addObject("gob", gob);
+			
+			int count = service.getcount(no,bno);
+			mav.addObject("count",count);
+			
+			
+			System.out.println(gob);
+			System.out.println("??????????????????");
+			System.out.println(sub);
+		}
+		
+		mav.addObject("til", til);
+		return mav;
+	}
+	
+	
+	@RequestMapping("subuser")
+	public ModelAndView subuser(Subscribe sub, HttpServletRequest request, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		
+		
+		User scrapper = (User)session.getAttribute("loginUser");
+		sub.setScrapper(scrapper.getName());
+		List<User> list = service.getUserList();
+		List<Subscribe> subuser = service.getsubuser();
+		mav.addObject("list", list);
+		mav.addObject("subuser", subuser);
+
+		System.out.println("????"); 
+		System.out.println(list);
+		System.out.println(subuser);
+		
+		
+		
+	
+		
+		
+		
+		return mav;
+	}
+	
 
 }

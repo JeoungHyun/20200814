@@ -82,6 +82,15 @@
 <div class="boardinfo">
 	<div class="header">팀원관리</div>
 	<table>
+	<tr>
+			<th>No</th>
+			<th>Name</th>
+			<th>Language</th>
+			<th>Phone number</th>
+			<th>Email</th>
+			<th>Comment</th>
+			<th colspan="2"></th>
+		</tr>
 		<c:forEach items="${member}" var="member">
 			<tr>
 				<td>${member.gno }</td>

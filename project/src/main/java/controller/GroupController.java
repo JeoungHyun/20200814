@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,7 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,38 +30,59 @@ public class GroupController {
 	}
 	
 	@GetMapping("memberlist")
-	public ModelAndView adminList(int gno, HttpSession session) {
+	public ModelAndView adminList(Integer gno, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User loginUser = (User) session.getAttribute("loginUser");
 		String name = loginUser.getName();
+		List<Coworking> group = service.getUsergroup(name);
+		List<Coworking> study = new ArrayList<Coworking>();
+		List<Coworking> contest = new ArrayList<Coworking>();
+		List<Coworking> project = new ArrayList<Coworking>();
+		for(Coworking g : group) {
+			if (g.getCategory().equals("스터디")) study.add(g);
+			else if (g.getCategory().equals("공모전")) contest.add(g);
+			else project.add(g);
+		}
+		mav.addObject("study",study);
+		mav.addObject("contest",contest);
+		mav.addObject("project",project);
+		mav.addObject("group",group);
 		List<Usergroup> member = service.getMemberList(gno);
 		List<Usergroup> apply = service.getApplyList(gno); 
-		List<Coworking> group = service.getUsergroup(name); 
-		mav.addObject("group",group);
 		mav.addObject("member",member);
 		mav.addObject("apply",apply);
 		return mav;
 	}
 	@GetMapping("main")
-	public ModelAndView main(Integer gno, HttpSession session) {
-		System.out.println(gno);
+	public ModelAndView loginCheckmain(Integer gno, HttpSession session) {
 		ModelAndView mav = new ModelAndView();
 		User loginUser = (User) session.getAttribute("loginUser");
 		String name = loginUser.getName();
-		List<Coworking> group = service.getUsergroup(name); 
+		List<Coworking> group = service.getUsergroup(name);
+		List<Coworking> study = new ArrayList<Coworking>();
+		List<Coworking> contest = new ArrayList<Coworking>();
+		List<Coworking> project = new ArrayList<Coworking>();
+		for(Coworking g : group) {
+			if (g.getCategory().equals("스터디")) study.add(g);
+			else if (g.getCategory().equals("공모전")) contest.add(g);
+			else project.add(g);
+		}
+		mav.addObject("study",study);
+		mav.addObject("contest",contest);
+		mav.addObject("project",project);
 		mav.addObject("group",group);
 		if(gno != null) {
-		int limit=10;
-		List<Board> boardlist = service.boardlist2(gno+100, limit);	
-		List<Usergroup> member = service.getMember(gno);
-		String membermaster = service.getMembermaset(gno);
-		int membercount = service.getMembercount(gno);
-		int membermax = service.getMembermax(gno);
-		mav.addObject("boardlist",boardlist);
-		mav.addObject("membermaster",membermaster);
-		mav.addObject("membermax",membermax);
-		mav.addObject("member",member);
-		mav.addObject("membercount",membercount);
+			int limit=10;
+			List<Board> boardlist = service.boardlist2(gno+100, limit);	
+			List<Usergroup> member = service.getMember(gno);
+			String membermaster = service.getMembermaset(gno);
+			int membercount = service.getMembercount(gno);
+			int membermax = service.getMembermax(gno);
+			mav.addObject("boardlist",boardlist);
+			mav.addObject("membermaster",membermaster);
+			mav.addObject("membermax",membermax);
+			mav.addObject("member",member);
+			mav.addObject("membercount",membercount);
 		}
 		return mav;
 	}

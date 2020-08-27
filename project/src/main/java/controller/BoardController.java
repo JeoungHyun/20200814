@@ -91,6 +91,7 @@ public class BoardController {
 	@PostMapping("write")
 	public ModelAndView write(Board board, BindingResult bresult, HttpServletRequest request) {
 
+
 		ModelAndView mav = new ModelAndView();
 		if (bresult.hasErrors()) {
 			mav.getModel().putAll(bresult.getModel());

@@ -17,37 +17,67 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${path}/css/main.css">
 <style type="text/css">
+body {
+	min-height: 80vh;
+	background: #edeafc54;
+	
+}
 .container {
 	display: flex;
-	width: 100%;
 	padding: 0;
-	margin: 0;
+	margin: 85px auto;
+	max-width: 80vw;
+	border: 2px solid #222;
+	border-radius: 10px;
+	background: #fff;
 }
 .container .nav_content {
-	width: 20%;
-	height: 919px;
-	background: #fff;
-	border-right: 3px solid #000;
+	width: 20vw;
+	border-radius: 10px 0 0 10px;
 }
 .container .nav_content .navbar {
-	padding: 20px;
+	padding: 20px 0;
+}
+.container .nav_content .navbar .nav h6 {
+	text-align: center;
+	font-style: italic;
+	color: #222;
+	opacity: 0.5;
 }
 .container .nav_content .navbar .nav ul {
 	list-style: none;
-	padding: 20px;
 	margin: 0;
 	padding: 0;
 }
 .container .nav_content .navbar .nav ul li {
+	display: none;
+	transition: 0.5s;
 	text-align: center;
-	font-size: 16px;
-	font-weight: 300;
+	font-size: 18px;
+	font-weight: bold;
 	line-height: 2;
 }
+.container .nav_content .navbar .nav ul li a {
+	color: #337ab7;
+	text-decoration: none;
+	background: transparent;
+}
+.container .nav_content .navbar .nav ul li:hover {
+	background: #8572EE;
+	color: #fff;
+}
+.container .nav_content .navbar .nav ul li:hover a {
+	color: #fff;
+}
+.container .nav_content .navbar .nav ul li:first-child {
+	display: block;
+	cursor: pointer;
+}
 .container .content {
-	width: 80%;
-	height: 919px;
-	background: #fff;
+	width: 60vw;
+	border-left: 2px solid #222;
+	border-radius: 0 10px 10px 0;
+	min-height: 70vh;
 }
 .content h2 {
 	text-align: center;
@@ -106,7 +136,7 @@
 </head>
 <body>
 <header>
-		<div class="logo"><a href="${path}/main/home.dev">Logo</a></div>
+		<div class="logo"><a href="${path}/main/home.dev"><img src="${path}/img/logo.png"></a></div>
 		<nav class="nav1">
 			<ul>
 			<c:if test="${loginUser == null}">
@@ -135,7 +165,11 @@
 		</nav>
 		<nav class="nav2">
 			<ul class="nav-menu">
-				<li class="menu-li"><a href="#">TIL</a></li>
+				<li class="menu-li"><a href="${path}/til/main.dev">TIL</a>
+				<ul>
+						<li><a href="${path}/til/main.dev?no=3">TIL 페이지 목록</a></li>
+						<li><a href="${path}/til/subuser.dev">구독한 사용자 목록</a></li>
+				</ul></li>
 				<li class="sub-menu menu-li"><a href="#">Community</a>
 					<ul>
 						<li><a href="${path}/board/list.dev?no=4">Q&A게시판</a></li>
@@ -157,33 +191,28 @@
 		<div class="nav_content">
 			<div class="navbar">
 				<div class="nav">
+						<c:if test="${empty group }"><h6>참여중인 그룹이 없습니다.</h6></c:if>
 					<ul>
-						<li>-스터디</li>
-							<c:forEach items="${group}" var="gr">
+						<c:if test="${!empty study}"><li>스터디 <i class="fa fa-caret-down"></i></li></c:if>
+							<c:forEach items="${study}" var="st">
 								<li>
-									<c:if test="${gr.category == '스터디' }">
-										<a href="${path}/group/main.dev?gno=${gr.gno}">${gr.title}</a>
-									</c:if>
+									<a href="${path}/group/main.dev?gno=${st.gno}">${st.title}</a>
 								</li>
 							</c:forEach>
 					</ul>
 					<ul>
-						<li>-공모전</li>
-							<c:forEach items="${group}" var="gr">
+						<c:if test="${!empty contest}"><li>공모전 <i class="fa fa-caret-down"></i></li></c:if>
+							<c:forEach items="${contest}" var="co">
 								<li>
-									<c:if test="${gr.category == '공모전' }">
-										<a href="${path}/group/main.dev?gno=${gr.gno}">${gr.title}</a>
-									</c:if>
+									<a href="${path}/group/main.dev?gno=${co.gno}">${co.title}</a>
 								</li>
 							</c:forEach>
 					</ul>
 					<ul>
-						<li>-프로젝트</li>
-							<c:forEach items="${group}" var="gr">
+						<c:if test="${!empty project}"><li>프로젝트 <i class="fa fa-caret-down"></i></li></c:if>
+							<c:forEach items="${project}" var="pr">
 								<li>
-									<c:if test="${gr.category == '프로젝트' }">
-										<a href="${path}/group/main.dev?gno=${gr.gno}">${gr.title}</a>
-									</c:if>
+									<a href="${path}/group/main.dev?gno=${pr.gno}">${pr.title}</a>
 								</li>
 							</c:forEach>
 					</ul>
@@ -195,5 +224,21 @@
 		</div>
 	</div>
 	</div>
+	<script type="text/javascript">
+		$(function() {
+			$(".container .nav_content .navbar .nav ul li:first-child").on("click", function() {
+				$(this).siblings().toggle();
+				$(this).toggleClass("checked");
+				if($(this).hasClass("checked")) {
+					$(this).children("i").removeClass("fa-caret-down");
+					$(this).children("i").addClass("fa-caret-up");
+				}else {
+					$(this).children("i").addClass("fa-caret-down");
+					$(this).children("i").removeClass("fa-caret-up");
+				}
+				
+			})
+		})
+	</script>
 </body>
 </html>
